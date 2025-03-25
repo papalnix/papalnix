@@ -3,310 +3,533 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Papalnix - 重新定义数字创新体验">
-    <title>Papalnix | 未来科技领航者</title>
-    <style>
-        :root {
-            --primary-color: #0071e3;
-            --text-dark: #1d1d1f;
-            --text-light: #86868b;
-            --bg-light: #f5f5f7;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
-        }
-
-        body {
-            background: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* 动态导航栏 */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1.2rem 5%;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: saturate(180%) blur(20px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .nav-brand {
-            font-size: 1.8rem;
-            font-weight: 600;
-            letter-spacing: -0.03em;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: opacity 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* 首屏区域 */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 5%;
-            margin-top: -80px;
-        }
-
-        .hero-content {
-            max-width: 900px;
-        }
-
-        .hero h1 {
-            font-size: 4.5rem;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.04em;
-            line-height: 1.1;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 1s ease forwards;
-        }
-
-        .hero p {
-            font-size: 1.8rem;
-            color: var(--text-light);
-            margin-bottom: 2.5rem;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 1s ease 0.3s forwards;
-        }
-
-        /* 内容区块 */
-        .section {
-            padding: 8rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section h2 {
-            font-size: 3rem;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        /* 合作伙伴网格 */
-        .collab-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .collab-card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .collab-card:hover {
-            transform: translateY(-10px);
-        }
-
-        /* 联系表单 */
-        .contact-wrapper {
-            background: #fff;
-            border-radius: 30px;
-            padding: 4rem;
-            margin-top: 3rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-        }
-
-        .contact-form {
-            display: grid;
-            gap: 1.5rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 1.2rem;
-            border: 1px solid #d2d2d7;
-            border-radius: 15px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus, textarea:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-
-        button {
-            background: var(--primary-color);
-            color: #fff;
-            padding: 1.2rem 2.5rem;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: fit-content;
-            margin: 1rem auto 0;
-        }
-
-        button:hover {
-            background: #0077ED;
-            transform: scale(1.05);
-        }
-
-        /* 动画效果 */
-        @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .nav-links {
-                gap: 1.5rem;
-            }
-
-            .hero h1 {
-                font-size: 3rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .section h2 {
-                font-size: 2.5rem;
-            }
-
-            .contact-wrapper {
-                padding: 2rem;
-            }
-        }
-    </style>
+    <title>PAPALNIX</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <nav>
-        <div class="nav-brand">Papalnix</div>
-        <div class="nav-links">
-            <a href="#collaborations">合作项目</a>
-            <a href="#about">关于我们</a>
-            <a href="#contact">联系我们</a>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo">PAPALNIX</a>
+            <ul class="nav-links">
+                <li><a href="#company-intro">公司简介</a></li>
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="#services">服务内容</a></li>
+                <li><a href="#cases">案例</a></li>
+                <li><a href="#team">团队</a></li>
+                <li><a href="#cooperation">合作</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+            <button class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>开启智能新时代</h1>
-                <p>融合创新科技与人性化设计，打造划时代的数字体验解决方案</p>
-            </div>
-        </section>
+    <!-- 首屏区域 -->
+    <section class="hero">
+        <div id="particles-js"></div>
+        <div class="hero-content">
+            <h1>Insight Creates Value</h1>
+            <p>融合创新科技与人性化设计，打造划时代的数字体验解决方案</p>
+            <a href="#company-intro" class="btn">了解更多</a>
+        </div>
+        <div class="scroll-down" id="scrollDown">
+            <a href="#company-intro">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path>
+            </svg>
+            </a>
+        </div>
+    </section>
 
-        <section id="collaborations" class="section">
-            <h2>战略合作项目</h2>
-            <div class="collab-grid">
-                <div class="collab-card">
-                    <h3>智能云生态</h3>
-                    <p>分布式云计算架构解决方案</p>
+    <!-- 公司简介 -->
+    <section id="company-intro" class="section company-intro">
+        <div class="container">
+            <h2 class="animate-on-scroll">公司简介</h2>
+            <div class="intro-content">
+                <div class="intro-text animate-on-scroll">
+                    <p class="text-center">PAPALNIX作为一家策略型广告策划机构，秉持"洞察本质，创造价值"的核心理念，致力于为品牌提供涵盖精准定位、深度连接以及美学传播的一站式综合解决方案。</p>
+                    <div class="intro-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-number">2024</span>
+                            <span class="highlight-text">年成立</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-number">8+</span>
+                            <span class="highlight-text">服务企业</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-number">35%</span>
+                            <span class="highlight-text">客户增长</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="collab-card">
-                    <h3>量子安全系统</h3>
-                    <p>下一代量子加密通信技术</p>
+            </div>
+            
+            <div class="intro-features">
+                <div class="feature-card animate-on-scroll delay-1">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 16l4-4-4-4"></path>
+                            <path d="M8 12h8"></path>
+                        </svg>
+                    </div>
+                    <h3>本质洞察力</h3>
+                    <p>依托先进的数据挖掘技术与深入的行业研究方法，对品牌所处的市场环境、竞争态势以及自身优劣势进行全面且细致的剖析，精准识别品牌发展核心问题。</p>
                 </div>
-                <div class="collab-card">
-                    <h3>AI协作平台</h3>
-                    <p>智能自动化工作流程系统</p>
+                <div class="feature-card animate-on-scroll delay-2">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>   
+                        </svg>
+                    </div>
+                    <h3>美学商业赋能</h3>
+                    <p>将医疗级美学标准巧妙融入品牌视觉体系，通过对色彩、线条、图形等美学元素的精心设计与整合，打造具有高度辨识度与独特魅力的品牌视觉形象。</p>
+                </div>
+                <div class="feature-card animate-on-scroll delay-3">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <path d="M3.27 6.96L12 12.01l8.73-5.05"></path>
+                            <path d="M12 22.08V12"></path>
+                        </svg>
+                    </div>
+                    <h3>连接与破圈</h3>
+                    <p>构建品牌与用户、行业资源之间的深度连接，通过定制"价值链路模型"，从策略制定到传播执行，形成完整高效的品牌推广体系，实现跨领域发展。</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="about" class="section">
-            <h2>关于我们</h2>
-            <div class="about-content">
-                <p>自2015年创立以来，Papalnix始终致力于突破技术边界。我们的国际团队汇聚了来自MIT、斯坦福等顶尖机构的专家，在人工智能、量子计算和用户体验设计领域持续创新。</p>
-                <br>
-                <p>通过获得40+项国际专利的技术成果，我们为全球财富500强企业提供数字化转型解决方案，服务覆盖金融、医疗、教育等12个核心领域。</p>
+    <!-- 关于我们 -->
+    <section id="about" class="section about">
+        <div class="container">
+            <h2 class="animate-on-scroll">关于我们</h2>
+            <p class="text-center animate-on-scroll">PAPALNIX是一家专注于品牌策划和创意设计的公司，我们致力于为客户提供全方位的品牌解决方案，帮助企业在竞争激烈的市场中脱颖而出。</p>
+            <div class="stats-container">
+                <div class="stat-card animate-on-scroll delay-1">
+                    <div class="stat-number" data-count="1">0</div>
+                    <div class="stat-title">行业经验（年）</div>
+                </div>
+                <div class="stat-card animate-on-scroll delay-2">
+                    <div class="stat-number" data-count="30">0</div>
+                    <div class="stat-title">成功案例</div>
+                </div>
+                <div class="stat-card animate-on-scroll delay-3">
+                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-title">客户满意度 (%)</div>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="contact" class="section">
-            <div class="contact-wrapper">
-                <h2>开启合作</h2>
-                <form class="contact-form">
-                    <input type="text" placeholder="姓名" required>
-                    <input type="email" placeholder="邮箱" required>
-                    <textarea rows="5" placeholder="项目需求描述" required></textarea>
-                    <button type="submit">发送咨询请求</button>
-                </form>
+    <!-- 服务内容 -->
+    <section id="services" class="section services">
+        <div class="container">
+            <h2 class="animate-on-scroll">服务内容</h2>
+            <p class="text-center animate-on-scroll">我们提供专业的品牌策划服务，从品牌定位到视觉设计，从市场分析到传播策略，为您的品牌注入新的活力。</p>
+            
+            <div class="services-container">
+                <div class="service-card animate-on-scroll delay-1">
+                    <div class="service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <h3>品牌策略</h3>
+                    <p>深入分析市场环境和目标受众，制定有效的品牌定位和发展策略，为品牌建立坚实的基础。</p>
+                </div>
+                <div class="service-card animate-on-scroll delay-2">
+                    <div class="service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M17.5 12a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm-1-5v2h2v-2h-2z"></path>
+                            <circle cx="6.5" cy="6.5" r="5.5"></circle>
+                        </svg>
+                    </div>
+                    <h3>视觉设计</h3>
+                    <p>创造独特的视觉标识系统，包括标志设计、色彩系统、字体选择和图形元素，塑造品牌的视觉形象。</p>
+                </div>
+                <div class="service-card animate-on-scroll delay-3">
+                    <div class="service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                            <path d="M9 3v18M15 3v18M3 9h18M3 15h18"></path>
+                        </svg>
+                    </div>
+                    <h3>数字营销</h3>
+                    <p>制定全面的数字营销策略，包括社交媒体运营、内容创作、SEO优化等，提升品牌的线上影响力。</p>
+                </div>
             </div>
-        </section>
-    </main>
 
-    <script>
-        // 滚动动画逻辑
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
+            <h3 class="text-center animate-on-scroll" style="margin-top: 50px;">我们的服务流程</h3>
+            <div class="process-timeline">
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-content">
+                        <h3>需求分析</h3>
+                        <p>深入了解客户需求，分析市场环境和竞争对手，明确项目目标和范围。</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-content">
+                        <h3>策略制定</h3>
+                        <p>基于分析结果，制定详细的品牌策略和实施计划，确定关键节点和时间线。</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-content">
+                        <h3>创意设计</h3>
+                        <p>进行创意构思和设计开发，创造符合品牌定位的视觉元素和内容。</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-content">
+                        <h3>执行落地</h3>
+                        <p>实施策略和设计方案，监控效果并根据反馈进行优化调整，确保目标达成。</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        document.querySelectorAll('.collab-card, .about-content').forEach((el) => {
-            el.style.opacity = 0;
-            el.style.transform = 'translateY(30px)';
-            observer.observe(el);
-        });
+    <!-- 品牌战略白皮书 -->
+    <section class="section whitepaper">
+        <div class="container">
+            <div class="whitepaper-content animate-on-scroll">
+                <h2>品牌战略白皮书</h2>
+                <p>我们的品牌战略白皮书汇集了最新的市场趋势和品牌营销理念，为企业提供专业的品牌发展指导。</p>
+                <div class="whitepaper-features">
+                    <div class="whitepaper-feature animate-on-scroll delay-1">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <h3>市场趋势分析</h3>
+                        <p>深度解读行业动态，把握市场脉搏</p>
+                    </div>
+                    <div class="whitepaper-feature animate-on-scroll delay-2">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 16l4-4-4-4"></path>
+                                <path d="M8 12h8"></path>
+                            </svg>
+                        </div>
+                        <h3>战略方法论</h3>
+                        <p>系统化的品牌建设方法与工具</p>
+                    </div>
+                    <div class="whitepaper-feature animate-on-scroll delay-3">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <path d="M3.27 6.96L12 12.01l8.73-5.05"></path>
+                                <path d="M12 22.08V12"></path>
+                            </svg>
+                        </div>
+                        <h3>案例研究</h3>
+                        <p>优秀品牌实践与经验总结</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        // 导航栏交互
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
-            } else {
-                nav.style.boxShadow = 'none';
-            }
-        });
-    </script>
+    <!-- 案例展示 -->
+    <section id="cases" class="section cases">
+        <div class="container">
+            <h2 class="animate-on-scroll">精选案例</h2>
+            <p class="text-center animate-on-scroll">探索我们为各行业客户打造的成功案例，了解我们如何帮助他们实现品牌价值提升。</p>
+            
+            <div class="cases-slider animate-on-scroll">
+                <div class="case-slide active">
+                    <div class="case-image">
+                        <img src="images/gse.jpg" alt="香港游戏公司GSE">
+                    </div>
+                    <div class="case-content">
+                        <h3>香港游戏公司GSE</h3>
+                        <p>PAPALNIX一直秉承着中华文化为宗旨，愿景将中华文化传达至全球各地。而Game Source Entertainment(GSE)的代表游戏作品之一是曾热销亚洲多个地区的"胡闹厨房"。根据剖析其市场环境等，精准定位其"亚洲中文化发行商"优势，制定品牌策略，助力内地市场认知度提升30%。</p>
+                    </div>
+                </div>
+                <div class="case-slide">
+                    <div class="case-image">
+                        <img src="images/seoul-aesthetic.jpg" alt="韩国医疗品牌Seoul Aesthetic美学赋能">
+                    </div>
+                    <div class="case-content">
+                        <h3>韩国医疗品牌Seoul Aesthetic美学赋能</h3>
+                        <p>将医疗级美学标准巧妙融入品牌视觉体系，是PAPALNIX的一大特色。通过对色彩、线条、图形等美学元素融入中华民族的文化内涵精心设计与整合，打造出具有高度辨识度与独特魅力的品牌视觉形象，提升品牌的溢价能力与市场竞争力。Seoul Aesthetic品牌在2023年获得了香港最佳医疗美容机构的奖项。紧接着，PAPALNIX为其打造整合营销方案，运用"高端品牌和系统化客户服务体系，从品牌标识、客户服务、安全保密系统，全方位塑造品牌形象，配合韩国美学文化专业，与其品牌创始人李睿媛医生 DR. Janet H Lee,MD，她是一位拥有15年以上医疗美容经验及全香港唯一一位同时拥有香港、韩国外科整形医生执照的首席医疗官。成功推动其高端客户占比增加15%，实现品牌在高端市场的突破与拓展。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slider-controls">
+                <div class="slider-dot active" data-slide="0"></div>
+                <div class="slider-dot" data-slide="1"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队成员 -->
+    <section id="team" class="section team">
+        <div class="container">
+            <h2 class="animate-on-scroll">我们的团队</h2>
+            <p class="text-center animate-on-scroll">我们拥有一支充满激情和创造力的专业团队，致力于为客户提供最优质的服务。</p>
+            
+            <div class="team-grid">
+                <div class="team-member animate-on-scroll">
+                    <div class="member-image">
+                        <!-- <img src="images/amh.jpg" alt="欧旻轩"> -->
+                    </div>
+                    <div class="member-info">
+                        <h3>欧旻轩</h3>
+                        <div class="member-position">CEO & 创始人</div>
+                        <p>中国整形美容协会及设计分会理事代表</p>
+                    </div>
+                    <div class="member-detail">
+                        <h3>欧旻轩</h3>
+                        <p>7年资深医疗美容经验及丰富的行政策划经验，拥有丰富的品牌战略和创意管理经验。擅长品牌定位和市场策略制定。</p>
+                    </div>
+                </div>
+                <div class="team-member animate-on-scroll">
+                    <div class="member-image">
+                        <!-- <img src="images/ly.jpg" alt="周一鸣"> -->
+                    </div>
+                    <div class="member-info">
+                        <h3>周一鸣</h3>
+                        <div class="member-position">设计总监</div>
+                        <p>前国际4A广告公司资深设计师</p>
+                    </div>
+                    <div class="member-detail">
+                        <h3>周一鸣</h3>
+                        <p>统领30+创意团队，主导集团品牌视觉体系重构，年输出200+商业设计解决方案。</p>
+                    </div>
+                </div>
+                <div class="team-member animate-on-scroll">
+                    <div class="member-image">
+                        <!-- <img src="images/wq.jpg" alt="肖顺铭"> -->
+                    </div>
+                    <div class="member-info">
+                        <h3>肖顺铭</h3>
+                        <div class="member-position">资深增长运营顾问</div>
+                        <p>增长战略顾问</p>
+                    </div>
+                    <div class="member-detail">
+                        <h3>肖顺铭</h3>
+                        <p>国企背景，拥有丰富的增长运营和战略规划经验。擅长破解流量密码，曾带动品牌搜索流量300%。</p>
+                    </div>
+                </div>
+                <div class="team-member animate-on-scroll">
+                    <div class="member-image">
+                        <!-- <img src="images/ct.jpg" alt="郑荣华"> -->
+                    </div>
+                    <div class="member-info">
+                        <h3>郑荣华</h3>
+                        <div class="member-position">技术流增长黑客</div>
+                        <p>擅长把握市场规律建立SOP标准流量启动</p>
+                    </div>
+                    <div class="member-detail">
+                        <h3>郑荣华</h3>
+                        <p>构建「工程师思维运营」，运用新技术运营助力合作品牌年沉淀精准客户5000+</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 合作流程 -->
+    <section id="cooperation" class="section cooperation">
+        <div class="container">
+            <h2 class="animate-on-scroll">合作流程</h2>
+            <p class="text-center animate-on-scroll">我们的合作流程清晰透明，确保项目高效推进，实现最佳效果。</p>
+            
+            <div class="cooperation-timeline">
+                <div class="cooperation-step animate-on-scroll">
+                    <div class="step-number">1</div>
+                    <div class="step-title">需求沟通</div>
+                    <p>深入了解您的业务需求和目标，确定项目范围和预期成果。</p>
+                </div>
+                <div class="cooperation-step animate-on-scroll">
+                    <div class="step-number">2</div>
+                    <div class="step-title">方案制定</div>
+                    <p>根据沟通结果，制定详细的项目方案和实施计划。</p>
+                </div>
+                <div class="cooperation-step animate-on-scroll">
+                    <div class="step-number">3</div>
+                    <div class="step-title">创意呈现</div>
+                    <p>进行创意设计和方案呈现，根据反馈进行调整优化。</p>
+                </div>
+                <div class="cooperation-step animate-on-scroll">
+                    <div class="step-number">4</div>
+                    <div class="step-title">项目执行</div>
+                    <p>全面实施项目方案，确保高质量按时交付。</p>
+                </div>
+                <div class="cooperation-step animate-on-scroll">
+                    <div class="step-number">5</div>
+                    <div class="step-title">效果评估</div>
+                    <p>项目完成后进行效果评估和后续优化建议。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="animate-on-scroll">联系我们</h2>
+            <p class="text-center animate-on-scroll">如果您有任何问题或合作意向，请随时与我们联系，我们将竭诚为您服务。</p>
+            
+            <div class="contact-container">
+                <div class="contact-form animate-on-scroll">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">姓名:</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">电话:</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <button type="submit" class="btn">提交</button>
+                    </form>
+                </div>
+                <div class="map-container animate-on-scroll" id="map">
+                    <video autoplay muted loop style="width: 100%; height: auto; max-height: 500px; object-fit: cover;">
+                        <source src="index.mp4" type="video/mp4">
+                        您的浏览器不支持视频标签。
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 品牌承诺 -->
+    <section class="section promise">
+        <div class="container">
+            <h2 class="animate-on-scroll">品牌承诺</h2>
+            <p class="text-center animate-on-scroll">我们致力于为客户提供最优质的服务，以下是我们对您的承诺。</p>
+            
+            <div class="promise-container">
+                <div class="promise-item animate-on-scroll">
+                    <div class="promise-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 8v4l3 3"></path>
+                        </svg>
+                    </div>
+                    <h3>准时交付</h3>
+                    <p>我们严格按照项目时间线推进工作，确保按时交付高质量成果。</p>
+                </div>
+                <div class="promise-item animate-on-scroll">
+                    <div class="promise-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5l6.74-6.76z"></path>
+                            <line x1="16" y1="8" x2="2" y2="22"></line>
+                            <line x1="17.5" y1="15" x2="9" y2="15"></line>
+                        </svg>
+                    </div>
+                    <h3>创意无限</h3>
+                    <p>我们不断创新，为客户提供独特而有效的品牌解决方案。</p>
+                </div>
+                <div class="promise-item animate-on-scroll">
+                    <div class="promise-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3>全程支持</h3>
+                    <p>从项目启动到执行完成，我们提供全程专业支持和咨询服务。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <h3>PAPALNIX</h3>
+                    <p>融合创新科技与人性化设计，打造划时代的数字体验解决方案</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <circle cx="18" cy="6" r="1"></circle>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>公司</h4>
+                        <ul>
+                            <li><a href="#about">关于我们</a></li>
+                            <li><a href="#team">团队成员</a></li>
+                            <li><a href="#">加入我们</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>服务</h4>
+                        <ul>
+                            <li><a href="#services">品牌策略</a></li>
+                            <li><a href="#services">视觉设计</a></li>
+                            <li><a href="#services">数字营销</a></li>
+                            <li><a href="#services">品牌活动</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>联系</h4>
+                        <ul>
+                            <li><a href="">1812994927@qq.com</a></li>
+                            <li><a href="#">+86 18075133058</a></li>
+                            <li><a href="#">深圳市福田区</a></li>
+                            <li><a href="#">工作时间: 09:00-18:00</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 PAPALNIX 品牌策划公司. 保留所有权利. 京ICP备12345678号</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="back-to-top" id="backToTop">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M18 15l-6-6-6 6"></path>
+        </svg>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
