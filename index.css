@@ -198,7 +198,7 @@ img {
     text-align: center;
     position: relative;
     overflow: hidden;
-    background-color: var(--color-dark-gray);
+    background-color: var(--color-dark-gray); /* 背景色作为视频加载前的过渡 */
     color: white;
 }
 
@@ -215,13 +215,8 @@ img {
 
 .video-background video {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translateX(-50%) translateY(-50%);
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     z-index: 1;
 }
@@ -335,10 +330,10 @@ img {
 }
 
 .services-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
 }
 
 .services .services-block:first-child {
@@ -393,15 +388,16 @@ img {
 }
 
 .service-card {
-    flex: 1;
-    min-width: 300px;
-    padding: 30px;
-    margin: 10px;
-    background-color: white;
+    background-color: var(--color-light);
     border-radius: 10px;
+    padding: 30px;
     box-shadow: var(--shadow-sm);
-    text-align: center;
     transition: var(--transition-smooth);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 内容水平居中 */
+    text-align: center; /* 文本居中 */
 }
 
 .service-card:hover {
@@ -1387,18 +1383,73 @@ footer {
     }
 
     .video-background {
-        height: 100%; /* 确保高度占满 */
+        position: absolute;
+        width: 100%;
+        height: 100%;
     }
     
     .video-background video {
+        position: absolute;
         width: 100%;
         height: 100%;
         object-fit: cover;
         object-position: center;
-        /* 在移动端移除transform，直接使用全尺寸定位 */
         top: 0;
         left: 0;
-        transform: none;
+    }
+
+    /* 确保首屏内容在移动端正确显示 */
+    .hero-content {
+        z-index: 3;
+        width: 100%;
+        padding: 0 20px;
+    }
+    
+    /* 确保滚动按钮在移动端可见 */
+    .scroll-down {
+        bottom: 30px;
+        z-index: 3;
+    }
+
+    /* 服务卡片容器在手机端居中显示 */
+    .services-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* 水平居中 */
+        gap: 30px;
+        width: 100%;
+    }
+    
+    /* 单个服务卡片样式调整 */
+    .service-card {
+        width: 90%; /* 控制宽度 */
+        max-width: 320px; /* 设置最大宽度 */
+        margin: 0 auto; /* 额外确保居中 */
+        box-sizing: border-box;
+    }
+    
+    /* 确保其他服务块也正确居中 */
+    .services-block {
+        width: 100%;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+    
+    /* 保证流程时间线在手机端的正确布局 */
+    .process-timeline {
+        width: 100%;
+        padding: 0 10px;
+    }
+    
+    /* 调整时间线项目布局 */
+    .timeline-item {
+        width: 100%;
+        margin-left: 0;
+        padding-left: 30px; /* 为时间线点留出空间 */
+    }
+    
+    .timeline-dot {
+        left: 0;
     }
 }
 
@@ -1406,12 +1457,12 @@ footer {
 @supports (-webkit-touch-callout: none) {
     .video-background video {
         position: absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        top: 0;
-        left: 0;
-        transform: none;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
     }
 }
 
