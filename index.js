@@ -405,89 +405,110 @@ document.addEventListener('DOMContentLoaded', function() {
 // 窗口大小变化时重新调整
 window.addEventListener('resize', optimizeSquareCaseImages);
 
-// 添加视频背景处理代码
+// 添加移动端首屏区域调整代码
 document.addEventListener('DOMContentLoaded', function() {
-    const video = document.getElementById('hero-video');
+    const isMobile = window.innerWidth <= 768;
     
-    if (video) {
-        // 确保视频自动播放
-        video.play().catch(function(error) {
-            console.log('视频自动播放失败，这在某些浏览器中是正常的: ', error);
-            
-            // 创建播放按钮作为后备方案
-            if (!document.querySelector('.video-play-btn')) {
-                const playButton = document.createElement('button');
-                playButton.classList.add('video-play-btn');
-                playButton.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>';
-                playButton.style.position = 'absolute';
-                playButton.style.zIndex = '4';
-                playButton.style.top = '50%';
-                playButton.style.left = '50%';
-                playButton.style.transform = 'translate(-50%, -50%)';
-                playButton.style.background = 'rgba(0, 0, 0, 0.5)';
-                playButton.style.color = 'white';
-                playButton.style.border = 'none';
-                playButton.style.borderRadius = '50%';
-                playButton.style.width = '64px';
-                playButton.style.height = '64px';
-                playButton.style.cursor = 'pointer';
-                
-                playButton.addEventListener('click', function() {
-                    video.play();
-                    this.remove();
-                });
-                
-                document.querySelector('.hero').appendChild(playButton);
-            }
-        });
+    // 只在移动端执行以下代码
+    if (isMobile) {
+        const heroContent = document.querySelector('.hero-content');
         
-        // 处理视频加载完成事件
-        video.addEventListener('loadeddata', function() {
-            // 移除可能添加的加载占位符
-            const loadingPlaceholder = document.querySelector('.video-loading');
-            if (loadingPlaceholder) {
-                loadingPlaceholder.remove();
-            }
+        if (heroContent) {
+            // 创建移动端视频播放器容器
+            const videoPlayerContainer = document.createElement('div');
+            videoPlayerContainer.className = 'mobile-video-player';
             
-            // 确保视频容器可见
-            document.querySelector('.video-background').style.opacity = '1';
-        });
-        
-        // 监听窗口调整大小事件，确保视频始终填满屏幕
-        function resizeVideo() {
-            const heroContainer = document.querySelector('.hero');
-            const windowRatio = window.innerWidth / window.innerHeight;
-            const videoRatio = video.videoWidth / video.videoHeight;
+            // 创建视频元素
+            const videoElement = document.createElement('video');
+            videoElement.controls = false; // 初始不显示控制栏
+            videoElement.playsInline = true;
+            videoElement.muted = true; // 默认静音以允许自动播放
+            videoElement.id = 'mobile-hero-video';
+            videoElement.style.display = 'block';
             
-            if (window.innerWidth <= 768) {
-                // 移动设备使用object-fit: cover
-                video.style.width = '100%';
-                video.style.height = '100%';
-                video.style.objectFit = 'cover';
-                video.style.top = '0';
-                video.style.left = '0';
-                video.style.transform = 'none';
-            } else {
-                // 桌面设备使用传统的居中缩放方法
-                if (windowRatio > videoRatio) {
-                    video.style.width = '100%';
-                    video.style.height = 'auto';
-                } else {
-                    video.style.width = 'auto';
-                    video.style.height = '100%';
+            // 添加视频源
+            const videoSource = document.createElement('source');
+            videoSource.src = 'bg.mp4'; // 视频源
+            videoSource.type = 'video/mp4';
+            
+            // 播放失败时显示的文本
+            videoElement.textContent = '您的浏览器不支持视频播放';
+            
+            // 将源添加到视频元素
+            videoElement.appendChild(videoSource);
+            
+            // 创建播放按钮
+            const playButton = document.createElement('button');
+            playButton.className = 'video-play-btn';
+            playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>';
+            
+            // 添加视频元素和播放按钮到容器
+            videoPlayerContainer.appendChild(videoElement);
+            videoPlayerContainer.appendChild(playButton);
+            
+            // 添加到hero-content之后
+            heroContent.appendChild(videoPlayerContainer);
+            
+            // 处理视频加载错误
+            videoElement.addEventListener('error', function() {
+                console.log('视频加载失败');
+                videoPlayerContainer.style.display = 'none'; // 隐藏整个视频播放器容器
+            });
+            
+            // 播放按钮点击事件
+            playButton.addEventListener('click', function() {
+                // 尝试播放视频
+                const playPromise = videoElement.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(function() {
+                        // 播放成功
+                        videoElement.controls = true; // 显示控制栏
+                        videoElement.muted = false; // 取消静音
+                        playButton.style.display = 'none'; // 隐藏播放按钮
+                    }).catch(function(error) {
+                        // 播放失败
+                        console.log('视频播放失败:', error);
+                        // 如果是因为用户交互限制，提示用户
+                        alert('请点击视频进行播放');
+                    });
                 }
+            });
+            
+            // 尝试自动播放（通常移动设备会阻止，但我们仍然尝试）
+            videoElement.addEventListener('loadeddata', function() {
+                const autoplayPromise = videoElement.play();
                 
-                video.style.top = '50%';
-                video.style.left = '50%';
-                video.style.transform = 'translate(-50%, -50%)';
-            }
+                if (autoplayPromise !== undefined) {
+                    autoplayPromise.catch(function() {
+                        // 自动播放失败，保持播放按钮可见
+                        console.log('自动播放被阻止，等待用户交互');
+                    });
+                }
+            });
+            
+            // 监听DOM变化，如果视频元素被移除，确保不影响布局
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'childList' && !heroContent.contains(videoPlayerContainer)) {
+                        // 如果视频容器被移除，确保布局正常
+                        console.log('视频容器被移除，调整布局');
+                        // 可以在这里添加额外的布局调整代码
+                    }
+                });
+            });
+            
+            // 开始观察DOM变化
+            observer.observe(heroContent, { childList: true });
+            
+            // 设置加载超时（5秒）
+            setTimeout(function() {
+                if (videoElement.readyState === 0) { // 未加载
+                    console.log('视频加载超时');
+                    videoPlayerContainer.style.display = 'none'; // 隐藏视频容器
+                }
+            }, 5000);
         }
-        
-        // 初始调整视频大小
-        resizeVideo();
-        
-        // 窗口大小变化时重新调整
-        window.addEventListener('resize', resizeVideo);
     }
 });
 
@@ -551,3 +572,80 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+// 添加移动端视频背景修复代码
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('hero-video');
+    const heroSection = document.querySelector('.hero');
+    const videoBackground = document.querySelector('.video-background');
+    const isMobile = window.innerWidth <= 768;
+    
+    // 仅针对移动端处理
+    if (isMobile) {
+        // 确保视频背景容器清晰可见
+        if (videoBackground) {
+            videoBackground.style.opacity = '1';
+        }
+        
+        if (video) {
+            // 重置视频样式
+            video.style.width = '100%';
+            video.style.height = '100%';
+            video.style.objectFit = 'cover';
+            video.style.position = 'absolute';
+            video.style.top = '0';
+            video.style.left = '0';
+            video.style.transform = 'none';
+            
+            // 确保视频正确属性设置
+            video.muted = true;
+            video.playsInline = true;
+            video.autoplay = true;
+            
+            // 处理视频加载失败的情况
+            video.addEventListener('error', handleVideoFailure);
+            
+            // 设置加载超时
+            const videoTimeout = setTimeout(function() {
+                if (video.readyState === 0) { // 尚未加载
+                    handleVideoFailure();
+                }
+            }, 3000);
+            
+            // 视频成功加载后清除超时
+            video.addEventListener('loadeddata', function() {
+                clearTimeout(videoTimeout);
+            });
+            
+            // 尝试播放视频
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function() {
+                    handleVideoFailure();
+                });
+            }
+        } else {
+            // 视频元素不存在时使用静态背景
+            handleVideoFailure();
+        }
+        
+        // 确保没有黑色遮罩
+        document.querySelectorAll('.hero::before, .hero::after, .video-background::before, .video-background::after').forEach(function(overlay) {
+            if (overlay) overlay.style.display = 'none';
+        });
+    }
+    
+    // 视频失败处理函数
+    function handleVideoFailure() {
+        // 隐藏视频背景
+        if (videoBackground) {
+            videoBackground.style.display = 'none';
+        }
+        
+        // 使用静态背景图
+        heroSection.style.backgroundImage = 'url("bg.jpeg")';
+        heroSection.style.backgroundSize = 'cover';
+        heroSection.style.backgroundPosition = 'center';
+    }
+});
+

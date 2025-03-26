@@ -192,49 +192,43 @@ img {
 /* 首屏区域 */
 .hero {
     height: 100vh;
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    position: relative;
-    overflow: hidden;
-    background-color: var(--color-dark-gray); /* 背景色作为视频加载前的过渡 */
-    color: white;
+    background-color: transparent; /* 移除背景色，避免产生黑色遮罩效果 */
 }
 
-/* 视频背景样式修复 - 专门针对移动端适应问题 */
 .video-background {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
     z-index: 1;
+    background-color: transparent; /* 确保视频背景容器没有背景色 */
 }
 
 .video-background video {
     position: absolute;
-    top: 50%;
-    left: 50%;
     min-width: 100%;
     min-height: 100%;
     width: auto;
     height: auto;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     object-fit: cover;
     z-index: 1;
 }
 
-/* 确保原有内容在视频之上 */
 .hero-content {
     position: relative;
-    z-index: 3;
+    z-index: 2; /* 降低z-index值，使其不会显得过高 */
     max-width: 800px;
     padding: 0 20px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 1s forwards 0.5s;
 }
 
 .hero h1 {
@@ -250,7 +244,7 @@ img {
 
 .scroll-down {
     position: relative;
-    z-index: 3;
+    z-index: 2; /* 确保与内容在同一层级 */
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
@@ -264,7 +258,7 @@ img {
     fill: white;
 }
 
-/* 修改首屏区域的了解更多按钮为黑色 */
+/* 调整了解更多按钮样式 */
 .hero .btn {
     background-color: #000;
     color: white;
@@ -272,6 +266,8 @@ img {
     padding: 12px 30px;
     font-weight: 500;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 2; /* 确保按钮与内容在同一层级 */
 }
 
 /* 修改按钮悬浮效果 */
@@ -1405,15 +1401,16 @@ footer {
 
     /* 确保首屏内容在移动端正确显示 */
     .hero-content {
-        z-index: 3;
-        width: 100%;
-        padding: 0 20px;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-top: -40px; /* 减少上边距，使内容向上移动 */
+        position: relative;
+        z-index: 2;
     }
     
     /* 确保滚动按钮在移动端可见 */
     .scroll-down {
-        bottom: 30px;
-        z-index: 3;
+        bottom: 20px;
     }
 
     /* 服务卡片容器在手机端居中显示 */
@@ -1455,6 +1452,213 @@ footer {
     
     .timeline-dot {
         left: 0;
+    }
+
+    .video-background::after {
+        display: none; /* 移除可能存在的遮罩层 */
+    }
+    
+    .video-background video {
+        opacity: 1; /* 确保视频完全不透明 */
+    }
+    
+    .hero::before,
+    .hero::after {
+        display: none; /* 移除可能存在的遮罩效果 */
+    }
+
+    /* 添加移动端首屏区域优化样式 */
+    .hero::before,
+    .hero::after,
+    .video-background::before,
+    .video-background::after {
+        display: none !important;
+    }
+    
+    /* 重置移动端首屏区域布局 */
+    .hero {
+        padding-top: 70px; /* 为导航栏留出空间 */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* 调整视频背景容器 */
+    .video-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background-color: transparent;
+        overflow: hidden;
+    }
+    
+    /* 优化视频元素样式 */
+    .video-background video {
+        position: absolute;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
+        z-index: 1;
+    }
+    
+    /* 确保内容层在视频之上 */
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 100%;
+        padding: 0 20px;
+    }
+    
+    /* 移除所有可能产生黑色遮罩的伪元素 */
+    .hero::before,
+    .hero::after,
+    .video-background::before,
+    .video-background::after {
+        display: none !important;
+    }
+    
+    /* 确保文字颜色正确 */
+    .hero-content h1,
+    .hero-content p {
+        color: #000000;
+        text-shadow: none; /* 移除阴影，确保在白色背景上文字清晰 */
+    }
+
+    /* 移除移动端的视频背景 */
+    .hero .video-background {
+        display: none;
+    }
+    
+    /* 首屏区域基础样式调整 */
+    .hero {
+        background-image: url('bg.jpeg'); /* 使用静态背景图片 */
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    /* 修改hero-content样式，添加播放器容器 */
+    .hero-content {
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0 20px;
+        width: 100%;
+        max-width: 600px;
+    }
+    
+    /* 视频播放器容器样式 */
+    .mobile-video-player {
+        width: 100%;
+        max-width: 320px;
+        margin: 20px auto 0;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        background-color: #000;
+        position: relative;
+    }
+    
+    /* 视频样式 */
+    .mobile-video-player video {
+        width: 100%;
+        display: block;
+        border-radius: 12px;
+    }
+    
+    /* 视频播放按钮样式 */
+    .video-play-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+    }
+    
+    .video-play-btn svg {
+        width: 24px;
+        height: 24px;
+        fill: white;
+    }
+    
+    /* 确保其他首屏元素正确显示 */
+    .hero h1 {
+        color: #000;
+        text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+    }
+    
+    .hero p {
+        color: #000;
+        text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+    }
+    
+    .scroll-down {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .scroll-down svg {
+        fill: #000;
+    }
+
+    /* 在移动端隐藏滚动按钮 */
+    .scroll-down {
+        display: none !important;
+    }
+    
+    /* 调整首屏区域下方空间 */
+    .hero {
+        padding-bottom: 0;
+    }
+    
+    /* 增加视频播放器容器的下边距，弥补滚动按钮消失后可能的空白 */
+    .mobile-video-player {
+        margin-bottom: 30px;
+    }
+    
+    /* 确保hero-content在滚动按钮消失后仍然垂直居中 */
+    .hero-content {
+        margin-bottom: 0;
+        padding-bottom: 20px;
+    }
+}
+
+/* 特别处理小屏幕手机 */
+@media (max-width: 380px) {
+    .hero-content {
+        margin-top: -20px; /* 较小的调整，适应小屏幕 */
+    }
+    
+    .hero h1 {
+        font-size: 2.2rem;
     }
 }
 
