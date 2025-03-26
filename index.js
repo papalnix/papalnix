@@ -1,4 +1,5 @@
 // 粒子背景效果
+/*
 particlesJS('particles-js', {
     "particles": {
         "number": {
@@ -104,6 +105,7 @@ particlesJS('particles-js', {
     },
     "retina_detect": true
 });
+*/
 
 // 导航栏滚动效果
 const navbar = document.querySelector('.navbar');
@@ -181,35 +183,73 @@ function animateNumbers() {
     });
 }
 
-// 案例轮播
-const slides = document.querySelectorAll('.case-slide');
-const dots = document.querySelectorAll('.slider-dot');
-let currentSlide = 0;
-
-function showSlide(index) {
-    slides.forEach((slide, i) => {
-        slide.classList.remove('active');
-        dots[i]?.classList.remove('active');
+// 修复案例轮播功能
+document.addEventListener('DOMContentLoaded', function() {
+  const slides = document.querySelectorAll('.case-slide');
+  const dots = document.querySelectorAll('.slider-dot');
+  let currentSlide = 0;
+  let slideInterval;
+  
+  // 显示指定幻灯片
+  function showSlide(index) {
+    // 隐藏所有幻灯片
+    slides.forEach(slide => {
+      slide.classList.remove('active');
     });
     
-    slides[index].classList.add('active');
-    dots[index]?.classList.add('active');
-    currentSlide = index;
-}
-
-dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-        showSlide(index);
+    // 更新指示点状态
+    dots.forEach(dot => {
+      dot.classList.remove('active');
     });
-});
-
-function nextSlide() {
+    
+    // 显示当前幻灯片和激活当前指示点
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+    currentSlide = index;
+  }
+  
+  // 初始化：确保只显示第一张幻灯片
+  function initSlider() {
+    // 先隐藏所有幻灯片
+    slides.forEach(slide => {
+      slide.classList.remove('active');
+    });
+    
+    // 只显示第一张
+    if(slides.length > 0) {
+      slides[0].classList.add('active');
+      dots[0].classList.add('active');
+    }
+  }
+  
+  // 切换到下一张幻灯片
+  function nextSlide() {
     currentSlide = (currentSlide + 1) % slides.length;
     showSlide(currentSlide);
-}
-
-// 自动轮播
-setInterval(nextSlide, 5000);
+  }
+  
+  // 设置自动轮播
+  function startAutoSlide() {
+    // 清除可能存在的旧定时器
+    if (slideInterval) {
+      clearInterval(slideInterval);
+    }
+    slideInterval = setInterval(nextSlide, 5000);
+  }
+  
+  // 点击指示点切换幻灯片
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      clearInterval(slideInterval); // 清除当前计时器
+      showSlide(index);
+      startAutoSlide(); // 重新开始自动轮播
+    });
+  });
+  
+  // 初始化轮播
+  initSlider();
+  startAutoSlide();
+});
 
 // 滚动动画
 function checkScroll() {
@@ -264,4 +304,160 @@ document.getElementById('contactForm').addEventListener('submit', function(event
         phoneInput.value = ''; // 清除电话输入框
         // 这里可以添加表单提交的逻辑
     }
+});
+
+// 移动端优化
+function optimizeCaseImages() {
+    const caseImages = document.querySelectorAll('.case-image img');
+    const isMobile = window.innerWidth <= 768;
+    
+    caseImages.forEach(img => {
+        // 让图片加载完成后再计算高度
+        img.onload = function() {
+            if (isMobile) {
+                // 移动端优化：限制最大高度并使用cover模式
+                img.style.maxHeight = '250px';
+                img.style.objectFit = 'cover';
+            } else {
+                // 桌面端：自适应高度
+                img.style.maxHeight = '';
+                img.style.objectFit = 'cover';
+            }
+        };
+        
+        // 如果图片已经加载完成，立即执行
+        if (img.complete) {
+            img.onload();
+        }
+    });
+}
+
+// 页面加载和窗口大小改变时优化图片
+window.addEventListener('load', optimizeCaseImages);
+window.addEventListener('resize', optimizeCaseImages);
+
+// 案例轮播图片优化
+function optimizeSquareCaseImages() {
+  const caseImages = document.querySelectorAll('.case-image');
+  const isMobile = window.innerWidth <= 768;
+  
+  caseImages.forEach(container => {
+    // 确保容器是正方形
+    container.style.aspectRatio = "1/1";
+    
+    const img = container.querySelector('img');
+    if (img) {
+      // 确保图片正确填充容器
+      img.style.objectFit = "cover";
+      img.style.width = "100%";
+      img.style.height = "100%";
+      
+      // 适应左右布局
+      if (!isMobile) {
+        // 桌面端左右布局优化
+        const containerWidth = container.parentElement.offsetWidth * 0.45;
+        // 控制最大宽度
+        if (containerWidth > 400) {
+          container.style.maxWidth = "400px";
+        }
+      } else {
+        // 移动端优化
+        container.style.maxWidth = "none";
+      }
+    }
+  });
+}
+
+// 确保DOM加载完成后初始化显示
+document.addEventListener('DOMContentLoaded', function() {
+  const slides = document.querySelectorAll('.case-slide');
+  const dots = document.querySelectorAll('.slider-dot');
+  
+  if (slides.length > 0) {
+    // 显示第一张幻灯片
+    slides[0].classList.add('active');
+    if (dots.length > 0) {
+      dots[0].classList.add('active');
+    }
+    
+    // 优化图片尺寸
+    optimizeSquareCaseImages();
+  }
+});
+
+// 窗口大小变化时重新调整
+window.addEventListener('resize', optimizeSquareCaseImages);
+
+// 添加视频背景的相关处理
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('hero-video');
+    
+    // 确保视频自动播放
+    video.play().catch(function(error) {
+        console.log('视频自动播放失败，这在某些浏览器中是正常的: ', error);
+        // 可以在这里添加一个播放按钮作为后备方案
+    });
+    
+    // 其他现有的初始化代码保持不变...
+});
+
+// 添加以下更可靠的代码来确保品牌承诺模块正确显示
+document.addEventListener('DOMContentLoaded', function() {
+  // 确保品牌承诺模块正确显示
+  const promiseSection = document.getElementById('promise');
+  if (promiseSection) {
+    // 确保模块可见
+    promiseSection.style.display = 'block';
+    
+    // 确保标题和内部元素正确显示
+    const promiseTitle = promiseSection.querySelector('h2');
+    if (promiseTitle) {
+      promiseTitle.style.display = 'block';
+      promiseTitle.style.color = 'white';
+      promiseTitle.style.visibility = 'visible';
+      promiseTitle.style.opacity = '1';
+    }
+    
+    // 确保段落正确显示
+    const promiseParagraph = promiseSection.querySelector('p.text-center');
+    if (promiseParagraph) {
+      promiseParagraph.style.display = 'block';
+      promiseParagraph.style.color = 'white';
+      promiseParagraph.style.visibility = 'visible';
+      promiseParagraph.style.opacity = '1';
+    }
+    
+    // 确保所有promise-item正确显示
+    const promiseItems = promiseSection.querySelectorAll('.promise-item');
+    promiseItems.forEach(item => {
+      item.style.display = 'block';
+      item.style.visibility = 'visible';
+      item.style.opacity = '1';
+      
+      // 确保SVG图标正确显示
+      const iconContainer = item.querySelector('.promise-icon');
+      const svg = item.querySelector('svg');
+      if (iconContainer && svg) {
+        iconContainer.style.display = 'flex';
+        svg.style.fill = 'white';
+        svg.style.display = 'block';
+        svg.style.visibility = 'visible';
+        svg.style.opacity = '1';
+      }
+      
+      // 确保标题和段落可见
+      const h3 = item.querySelector('h3');
+      const p = item.querySelector('p');
+      if (h3) {
+        h3.style.color = 'white';
+        h3.style.display = 'block';
+        h3.style.visibility = 'visible';
+      }
+      if (p) {
+        p.style.color = 'white';
+        p.style.display = 'block';
+        p.style.visibility = 'visible';
+      }
+    });
+  }
 });

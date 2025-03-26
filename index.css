@@ -98,16 +98,18 @@ img {
     left: 0;
     width: 100%;
     height: 70px;
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background-color: transparent; /* 初始透明背景 */
     z-index: 1000;
     transition: var(--transition-smooth);
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: none; /* 移除阴影 */
 }
 
+/* 滚动状态 - 当页面滚动后应用 */
 .navbar.scrolled {
     background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
 }
 
 .navbar-container {
@@ -117,10 +119,12 @@ img {
     height: 100%;
 }
 
+/* logo颜色调整 */
 .logo {
     font-size: 1.8rem;
     font-weight: 700;
     letter-spacing: -0.5px;
+    color: black; /* 确保在视频背景上可见 */
 }
 
 .nav-links {
@@ -132,11 +136,12 @@ img {
     margin-left: 30px;
 }
 
+/* 导航文字颜色调整 - 适应透明背景 */
 .nav-links a {
     position: relative;
     font-weight: 500;
     font-size: 0.95rem;
-    color: var(--color-secondary);
+    color: black; /* 确保在视频背景上可见 */
 }
 
 .nav-links a::after {
@@ -146,16 +151,26 @@ img {
     bottom: -5px;
     width: 0;
     height: 2px;
-    background-color: var(--color-accent);
+    background-color: white; /* 将底部线条颜色改为白色 */
     transition: var(--transition-smooth);
 }
 
 .nav-links a:hover {
-    color: var(--color-accent);
+    color: white;
 }
 
 .nav-links a:hover::after {
     width: 100%;
+}
+
+/* 确保在滚动状态下的导航栏保持原有的悬浮颜色 */
+.navbar.scrolled .nav-links a:hover {
+    color: var(--color-accent); /* 滚动状态下保持原来的主题色 */
+}
+
+/* 确保在滚动状态下的导航栏保持原来的主题色底部线条 */
+.navbar.scrolled .nav-links a::after {
+    background-color: var(--color-accent); /* 滚动状态下保持原来的主题色底部线条 */
 }
 
 .nav-toggle {
@@ -187,18 +202,34 @@ img {
     color: white;
 }
 
-#particles-js {
+/* 视频背景样式修复 - 专门针对移动端适应问题 */
+.video-background {
     position: absolute;
-    width: 100%;
-    height: 100%;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     z-index: 1;
 }
 
+.video-background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translateX(-50%) translateY(-50%);
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* 确保原有内容在视频之上 */
 .hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     max-width: 800px;
     padding: 0 20px;
     opacity: 0;
@@ -208,20 +239,21 @@ img {
 
 .hero h1 {
     margin-bottom: 20px;
+    color: #000000; /* 黑色标题 */
 }
 
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 30px;
-    color: rgba(255, 255, 255, 0.8);
+    color: #000000; /* 黑色描述文字 */
 }
 
 .scroll-down {
-    position: absolute;
+    position: relative;
+    z-index: 3;
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 3;
     animation: bounce 2s infinite;
     cursor: pointer;
 }
@@ -232,13 +264,22 @@ img {
     fill: white;
 }
 
-.hero video {
-    width: 100%;
-    height: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
+/* 修改首屏区域的了解更多按钮为黑色 */
+.hero .btn {
+    background-color: #000;
+    color: white;
+    border: 1px solid #000;
+    padding: 12px 30px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* 修改按钮悬浮效果 */
+.hero .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    background-color: #333;
+    border-color: #333;
 }
 
 /* 关于我们 */
@@ -289,7 +330,7 @@ img {
 
 /* 服务内容 */
 .services {
-    background-color: var(--color-light);
+    background-color: white;  /* 修改为银色背景 */
     padding: 40px 0;
 }
 
@@ -298,6 +339,57 @@ img {
     justify-content: space-between;
     flex-wrap: wrap;
     margin-top: 30px;
+}
+
+.services .services-block:first-child {
+    background-color: #C0C0C0;  /* 保持银色背景 */
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-smooth);
+}
+
+/* 调整服务内容第一块内部元素的样式以适应银色背景 */
+.services .services-block:first-child h2,
+.services .services-block:first-child p {
+    color: var(--color-dark-gray);  /* 使文字在银色背景上更易读 */
+}
+
+/* 调整服务卡片与背景的对比度 */
+.services .services-block:first-child .service-card {
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin: 15px;
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 增强服务卡片悬停效果 */
+.services .services-block:first-child .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 调整服务卡片内图标样式 */
+.services .services-block:first-child .service-icon {
+    background-color: rgba(0, 113, 227, 0.1);
+    padding: 12px;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+/* 调整服务卡片内标题样式 */
+.services .services-block:first-child .service-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--color-secondary);
 }
 
 .service-card {
@@ -513,49 +605,59 @@ img {
 }
 
 .cases-slider {
-    position: relative;
     width: 100%;
-    height: 500px;
-    margin-top: 30px;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto 30px;
+    max-width: 1000px;
 }
 
 .case-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 50px;
+    display: none;
 }
 
 .case-slide.active {
-    opacity: 1;
-    z-index: 2;
+    display: flex;
 }
 
 .case-image {
-    width: 50%;
-    height: 400px;
-    background-color: var(--color-gray);
-    border-radius: 10px;
+    width: 45%;
+    position: relative;
     overflow: hidden;
-    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    aspect-ratio: 1/1;
+    height: auto;
+    flex-shrink: 0;
+    max-width: 400px;
+}
+
+.case-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
 }
 
 .case-content {
-    width: 80%;
+    width: 55%;
     padding: 20px;
-    margin-top: 20px;
-    text-align: center;
+    text-align: left;
 }
 
 .case-content h3 {
     margin-bottom: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+.case-content p {
+    text-indent: 2em;
+    text-align: justify;
+    line-height: 1.6;
 }
 
 .slider-controls {
@@ -568,14 +670,14 @@ img {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background-color: var(--color-gray);
+    background-color: #ddd;
     margin: 0 5px;
     cursor: pointer;
-    transition: var(--transition-smooth);
+    transition: all 0.3s ease;
 }
 
 .slider-dot.active {
-    background-color: var(--color-accent);
+    background-color: #333;
 }
 
 /* 团队成员 */
@@ -588,6 +690,7 @@ img {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 30px;
     margin-top: 50px;
+    align-items: stretch; /* 确保所有卡片高度一致拉伸 */
 }
 
 .team-member {
@@ -595,54 +698,96 @@ img {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--shadow-sm);
-    transition: var(--transition-smooth);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* 使用更平滑的贝塞尔曲线 */
+    background-color: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transform: translateZ(0); /* 启用GPU加速 */
 }
 
 .team-member:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-8px) scale(1.02); /* 略微放大并上移 */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); /* 更明显的阴影效果 */
 }
 
 .member-image {
     width: 100%;
     height: 300px;
-    background-color: var(--color-gray);
+    background-color: #f5f5f7; /* 使用与页面背景相同的颜色 */
+    overflow: hidden; /* 确保图片不会溢出 */
+}
+
+.member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.6s ease-out; /* 较慢的图片变换效果 */
+}
+
+.team-member:hover .member-image img {
+    transform: scale(1.05); /* 图片轻微放大 */
 }
 
 .member-info {
     padding: 20px;
     background-color: white;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s ease;
+}
+
+.team-member:hover .member-info {
+    background-color: #f9f9f9; /* 悬浮时轻微改变背景颜色 */
+}
+
+.team-member:hover h3 {
+    color: var(--color-accent); /* 悬浮时改变标题颜色 */
+    transform: translateY(-2px); /* 轻微上移标题 */
+    transition: all 0.4s ease;
 }
 
 .member-info h3 {
     margin-bottom: 5px;
 }
 
+/* 调整member-info下的p标签字体大小，使其比member-position的字体小 */
+.member-info p {
+    font-size: 0.85rem; /* 将字体大小设置为0.85rem，比member-position的0.9rem小 */
+    color: var(--color-gray); /* 保持灰色文本颜色 */
+    line-height: 1.5;
+    margin-top: 5px;
+}
+
+/* 确保member-position样式保持不变，作为参考 */
 .member-position {
-    color: var(--color-accent);
-    font-weight: 500;
+    color: #000000;
+    font-weight: 600;
     font-size: 0.9rem;
     margin-bottom: 10px;
 }
 
 .member-detail {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 30px;
-    opacity: 0;
-    transition: var(--transition-smooth);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: none; /* 完全隐藏详情元素 */
 }
 
-.team-member:hover .member-detail {
-    opacity: 1;
+/* 添加卡片边框效果 */
+.team-member::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, var(--color-accent), #6a11cb);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.team-member:hover::after {
+    transform: scaleX(1); /* 显示底部渐变边框 */
 }
 
 /* 合作流程 */
@@ -706,90 +851,197 @@ img {
 
 .contact-container {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-top: 20px;
-}
-
-.contact-form {
-    flex: 1;
-    margin-right: 20px;
-}
-
-.map-container {
-    flex: 1;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea {
+    justify-content: center;
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-family: var(--font-primary);
-    font-size: 1rem;
-    transition: var(--transition-smooth);
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
-}
-
-.form-group textarea {
-    height: 120px;
-    resize: vertical;
-}
-
-.map-container video {
-    width: 100%;
-    height: auto;
-    max-height: 500px;
-    object-fit: cover;
-}
-
-/* 品牌承诺 */
-.promise {
-    background-color: white;
-}
-
-.promise-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
     margin-top: 50px;
 }
 
+.contact-form {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.contact-form .form-group {
+    margin-bottom: 25px;
+    width: 100%;
+    position: relative;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--color-secondary);
+    font-size: 0.95rem;
+}
+
+.contact-form input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+.contact-form input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
+    outline: none;
+    background-color: white;
+}
+
+.contact-form .btn {
+    margin: 10px auto 0;
+    padding: 12px 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    background: var(--color-accent);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 113, 227, 0.2);
+}
+
+.contact-form .btn:hover {
+    background: #0062c4;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3);
+}
+
+.contact-form .btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 113, 227, 0.2);
+}
+
+.contact h2,
+.contact p {
+    margin-bottom: initial;
+}
+
+.contact h2 {
+    margin-bottom: 10px;
+}
+
+.contact p {
+    margin-bottom: 30px;
+}
+
+/* 确保移动端也有良好体验 */
+@media (max-width: 768px) {
+    .contact-form {
+        padding: 30px 20px;
+        margin: 15px auto;
+    }
+}
+
+/* 修改品牌承诺模块的背景，移除渐变效果改为纯色 */
+#promise {
+    background: #0A3D62; /* 使用纯蓝色背景，移除渐变 */
+    position: relative;
+    z-index: 1;
+    padding: 60px 0; /* 恢复正常内边距 */
+}
+
+/* 删除渐变过渡伪元素 */
+#promise::before,
+#promise::after {
+    display: none; /* 隐藏之前的渐变过渡伪元素 */
+}
+
+/* 确保文字和元素颜色正确 */
+#promise h2,
+#promise p.text-center,
+.promise-item h3,
+.promise-item p,
+.promise-icon svg {
+    color: white !important;
+    fill: white !important;
+}
+
+.promise-container {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+}
+
 .promise-item {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     flex: 1;
-    min-width: 300px;
+    min-width: 250px;
+    max-width: 350px;
     padding: 30px;
-    margin: 15px;
+    background: rgba(255, 255, 255, 0.08); /* 略微调整透明度，增强协调性 */
+    border-radius: 10px;
     text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* 增强阴影效果 */
+}
+
+.promise-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
 }
 
 .promise-icon {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
     width: 60px;
     height: 60px;
-    margin: 0 auto 20px;
+    background-color: rgba(0, 113, 227, 0.15); /* 添加轻微的背景色 */
+    border-radius: 50%;
+    padding: 12px;
 }
 
 .promise-icon svg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    fill: white !important;
     width: 100%;
     height: 100%;
-    fill: var(--color-accent);
+}
+
+.promise-item:hover .promise-icon {
+    background-color: rgba(0, 113, 227, 0.25);
+    transform: scale(1.05);
+}
+
+.promise-item h3 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: white !important;
+    margin-bottom: 15px;
+}
+
+.promise-item p {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: white !important;
 }
 
 /* 页脚 */
@@ -1109,6 +1361,58 @@ footer {
     .whitepaper-feature {
         padding: 25px;
     }
+
+    .case-slide {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .case-image {
+        width: 100%;
+        max-width: none;
+    }
+    
+    .case-content {
+        width: 100%;
+        padding: 15px 0;
+        text-align: center;
+    }
+
+    .cases-slider {
+        max-width: 85%;
+    }
+
+    .case-content h3 {
+        text-align: center;
+    }
+
+    .video-background {
+        height: 100%; /* 确保高度占满 */
+    }
+    
+    .video-background video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        /* 在移动端移除transform，直接使用全尺寸定位 */
+        top: 0;
+        left: 0;
+        transform: none;
+    }
+}
+
+/* 针对iOS设备的特殊处理 */
+@supports (-webkit-touch-callout: none) {
+    .video-background video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        top: 0;
+        left: 0;
+        transform: none;
+    }
 }
 
 /* 公司简介 */
@@ -1270,4 +1574,13 @@ footer {
 .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 113, 227, 0.4);
+}
+
+/* 统一所有section的标题和段落间距 */
+.section h2 {
+    margin-bottom: 30px;  /* 与其他模块保持一致的标题下边距 */
+}
+
+.section p.text-center {
+    margin-bottom: 50px;  /* 与其他模块保持一致的段落下边距 */
 }

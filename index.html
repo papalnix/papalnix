@@ -30,7 +30,14 @@
 
     <!-- 首屏区域 -->
     <section class="hero">
-        <div id="particles-js"></div>
+        <!-- 替换粒子效果背景为视频背景 -->
+        <div class="video-background">
+            <video autoplay muted loop playsinline id="hero-video">
+                <source src="bg.webm" type="video/mp4">
+                <!-- 浏览器不支持视频时的后备内容 -->
+                您的浏览器不支持视频标签。
+            </video>
+        </div>
         <div class="hero-content">
             <h1>Insight Creates Value</h1>
             <p>融合创新科技与人性化设计，打造划时代的数字体验解决方案</p>
@@ -132,70 +139,76 @@
     <!-- 服务内容 -->
     <section id="services" class="section services">
         <div class="container">
-            <h2 class="animate-on-scroll">服务内容</h2>
-            <p class="text-center animate-on-scroll">我们提供专业的品牌策划服务，从品牌定位到视觉设计，从市场分析到传播策略，为您的品牌注入新的活力。</p>
-            
-            <div class="services-container">
-                <div class="service-card animate-on-scroll delay-1">
-                    <div class="service-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                        </svg>
+            <!-- 第一大块：标题、介绍和服务卡片 -->
+            <div class="services-block">
+                <h2 class="animate-on-scroll">服务内容</h2>
+                <p class="text-center animate-on-scroll">我们提供专业的品牌策划服务，从品牌定位到视觉设计，从市场分析到传播策略，为您的品牌注入新的活力。</p>
+                
+                <div class="services-container">
+                    <div class="service-card animate-on-scroll delay-1">
+                        <div class="service-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <h3>品牌策略</h3>
+                        <p>深入分析市场环境和目标受众，制定有效的品牌定位和发展策略，为品牌建立坚实的基础。</p>
                     </div>
-                    <h3>品牌策略</h3>
-                    <p>深入分析市场环境和目标受众，制定有效的品牌定位和发展策略，为品牌建立坚实的基础。</p>
-                </div>
-                <div class="service-card animate-on-scroll delay-2">
-                    <div class="service-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M17.5 12a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm-1-5v2h2v-2h-2z"></path>
-                            <circle cx="6.5" cy="6.5" r="5.5"></circle>
-                        </svg>
+                    <div class="service-card animate-on-scroll delay-2">
+                        <div class="service-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M17.5 12a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm-1-5v2h2v-2h-2z"></path>
+                                <circle cx="6.5" cy="6.5" r="5.5"></circle>
+                            </svg>
+                        </div>
+                        <h3>视觉设计</h3>
+                        <p>创造独特的视觉标识系统，包括标志设计、色彩系统、字体选择和图形元素，塑造品牌的视觉形象。</p>
                     </div>
-                    <h3>视觉设计</h3>
-                    <p>创造独特的视觉标识系统，包括标志设计、色彩系统、字体选择和图形元素，塑造品牌的视觉形象。</p>
-                </div>
-                <div class="service-card animate-on-scroll delay-3">
-                    <div class="service-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                            <path d="M9 3v18M15 3v18M3 9h18M3 15h18"></path>
-                        </svg>
+                    <div class="service-card animate-on-scroll delay-3">
+                        <div class="service-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                <path d="M9 3v18M15 3v18M3 9h18M3 15h18"></path>
+                            </svg>
+                        </div>
+                        <h3>数字营销</h3>
+                        <p>制定全面的数字营销策略，包括社交媒体运营、内容创作、SEO优化等，提升品牌的线上影响力。</p>
                     </div>
-                    <h3>数字营销</h3>
-                    <p>制定全面的数字营销策略，包括社交媒体运营、内容创作、SEO优化等，提升品牌的线上影响力。</p>
                 </div>
             </div>
 
-            <h3 class="text-center animate-on-scroll" style="margin-top: 50px;">我们的服务流程</h3>
-            <div class="process-timeline">
-                <div class="timeline-item animate-on-scroll">
-                    <div class="timeline-content">
-                        <h3>需求分析</h3>
-                        <p>深入了解客户需求，分析市场环境和竞争对手，明确项目目标和范围。</p>
+            <!-- 第二大块：服务流程 -->
+            <div class="services-block" style="margin-top: 40px;">
+                <h3 class="text-center animate-on-scroll" style="margin-top: 50px;">我们的服务流程</h3>
+                <div class="process-timeline">
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-content">
+                            <h3>需求分析</h3>
+                            <p>深入了解客户需求，分析市场环境和竞争对手，明确项目目标和范围。</p>
+                        </div>
+                        <div class="timeline-dot"></div>
                     </div>
-                    <div class="timeline-dot"></div>
-                </div>
-                <div class="timeline-item animate-on-scroll">
-                    <div class="timeline-content">
-                        <h3>策略制定</h3>
-                        <p>基于分析结果，制定详细的品牌策略和实施计划，确定关键节点和时间线。</p>
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-content">
+                            <h3>策略制定</h3>
+                            <p>基于分析结果，制定详细的品牌策略和实施计划，确定关键节点和时间线。</p>
+                        </div>
+                        <div class="timeline-dot"></div>
                     </div>
-                    <div class="timeline-dot"></div>
-                </div>
-                <div class="timeline-item animate-on-scroll">
-                    <div class="timeline-content">
-                        <h3>创意设计</h3>
-                        <p>进行创意构思和设计开发，创造符合品牌定位的视觉元素和内容。</p>
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-content">
+                            <h3>创意设计</h3>
+                            <p>进行创意构思和设计开发，创造符合品牌定位的视觉元素和内容。</p>
+                        </div>
+                        <div class="timeline-dot"></div>
                     </div>
-                    <div class="timeline-dot"></div>
-                </div>
-                <div class="timeline-item animate-on-scroll">
-                    <div class="timeline-content">
-                        <h3>执行落地</h3>
-                        <p>实施策略和设计方案，监控效果并根据反馈进行优化调整，确保目标达成。</p>
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-content">
+                            <h3>执行落地</h3>
+                            <p>实施策略和设计方案，监控效果并根据反馈进行优化调整，确保目标达成。</p>
+                        </div>
+                        <div class="timeline-dot"></div>
                     </div>
-                    <div class="timeline-dot"></div>
                 </div>
             </div>
         </div>
@@ -250,19 +263,23 @@
             <h2 class="animate-on-scroll">精选案例</h2>
             <p class="text-center animate-on-scroll">探索我们为各行业客户打造的成功案例，了解我们如何帮助他们实现品牌价值提升。</p>
             
+            <!-- 轮播容器 -->
             <div class="cases-slider animate-on-scroll">
-                <div class="case-slide active">
+                <!-- 第一个案例 -->
+                <div class="case-slide">
                     <div class="case-image">
-                        <img src="images/gse.jpg" alt="香港游戏公司GSE">
+                        <img src="images/gse.jpg" alt="香港游戏公司GSE" loading="lazy">
                     </div>
                     <div class="case-content">
                         <h3>香港游戏公司GSE</h3>
-                        <p>PAPALNIX一直秉承着中华文化为宗旨，愿景将中华文化传达至全球各地。而Game Source Entertainment(GSE)的代表游戏作品之一是曾热销亚洲多个地区的"胡闹厨房"。根据剖析其市场环境等，精准定位其"亚洲中文化发行商"优势，制定品牌策略，助力内地市场认知度提升30%。</p>
+                        <p>PAPALNIX与香港游戏公司Game Source Entertainment (GSE)达成合作，GSE旗下代表游戏作品“胡闹厨房”曾在亚洲多地区热卖。PAPALNIX以传播中华文化为己任，期望将中华文化传递到世界各地。在合作中，PAPALNIX深入分析市场环境，精准定位GSE“亚洲中文化发行商”的优势，制定品牌策略，助力GSE在内地市场提升了认知度。GSE作为亚洲区主机游戏发行商及代理商，与多家知名游戏开发商合作，推出了多款中文化游戏，其产品覆盖PlayStation®4、PlayStation®5、Nintendo Switch™、Xbox One等多个平台。PAPALNIX通过与GSE的合作，不仅帮助其进一步巩固了在亚洲市场的地位，也推动了中华文化的传播，实现了双方的互利共赢。</p>
                     </div>
                 </div>
+                
+                <!-- 第二个案例 -->
                 <div class="case-slide">
                     <div class="case-image">
-                        <img src="images/seoul-aesthetic.jpg" alt="韩国医疗品牌Seoul Aesthetic美学赋能">
+                        <img src="images/seoul-aesthetic.jpg" alt="韩国医疗品牌Seoul Aesthetic美学赋能" loading="lazy">
                     </div>
                     <div class="case-content">
                         <h3>韩国医疗品牌Seoul Aesthetic美学赋能</h3>
@@ -271,6 +288,7 @@
                 </div>
             </div>
             
+            <!-- 轮播控制点 -->
             <div class="slider-controls">
                 <div class="slider-dot active" data-slide="0"></div>
                 <div class="slider-dot" data-slide="1"></div>
@@ -287,58 +305,42 @@
             <div class="team-grid">
                 <div class="team-member animate-on-scroll">
                     <div class="member-image">
-                        <!-- <img src="images/amh.jpg" alt="欧旻轩"> -->
+                        <img src="images/amh.jpg" alt="欧旻轩">
                     </div>
                     <div class="member-info">
                         <h3>欧旻轩</h3>
-                        <div class="member-position">CEO & 创始人</div>
-                        <p>中国整形美容协会及设计分会理事代表</p>
-                    </div>
-                    <div class="member-detail">
-                        <h3>欧旻轩</h3>
-                        <p>7年资深医疗美容经验及丰富的行政策划经验，拥有丰富的品牌战略和创意管理经验。擅长品牌定位和市场策略制定。</p>
+                        <div class="member-position">CEO</div>
+                        <p>现任首席执行官、毕业于人力资源管理专业，中国整形美容协会代表理事、青年企业家协会成员。他亦是医美培训导师，拥有7年医疗美容设计经验，曾获工作单位荣誉最年轻新人王，青年企业家协会杰出企业家奖，亦是PAPALNIX的创始人。</p>
                     </div>
                 </div>
                 <div class="team-member animate-on-scroll">
                     <div class="member-image">
-                        <!-- <img src="images/ly.jpg" alt="周一鸣"> -->
+                        <img src="images/zym.jpg" alt="周一鸣">
                     </div>
                     <div class="member-info">
                         <h3>周一鸣</h3>
+                        <div class="member-position">广告策划师</div>
+                        <p>是一位经验丰富的广告人，拥有4年的咨询广告行业经验。他凭借卓越的创意和专业能力，在湖北省文化创意大赛中一举夺魁，毕业于广告学专业，他致力于为客户打造极具吸引力和影响力的广告作品，深受客户和同行的认可与赞誉。</p>
+                    </div>
+                </div>
+                <div class="team-member animate-on-scroll">
+                    <div class="member-image">
+                        <img src="images/xsm.jpg" alt="肖顺铭">
+                    </div>
+                    <div class="member-info">
+                        <h3>肖顺铭</h3>
                         <div class="member-position">设计总监</div>
-                        <p>前国际4A广告公司资深设计师</p>
-                    </div>
-                    <div class="member-detail">
-                        <h3>周一鸣</h3>
-                        <p>统领30+创意团队，主导集团品牌视觉体系重构，年输出200+商业设计解决方案。</p>
+                        <p>现任设计总监。曾多年就职于国家电网单位，积累了丰富的工程与项目管理经验。然而他对艺术的热爱促使他投身于设计领域。凭借对美学的敏锐洞察力和创新设计理念，形成了独特的美学风格。他的作品融合了技术与艺术的精髓，为行业带来了新的活力和灵感。</p>
                     </div>
                 </div>
                 <div class="team-member animate-on-scroll">
                     <div class="member-image">
-                        <!-- <img src="images/wq.jpg" alt="肖顺铭"> -->
-                    </div>
-                    <div class="member-info">
-                        <h3>肖顺铭</h3>
-                        <div class="member-position">资深增长运营顾问</div>
-                        <p>增长战略顾问</p>
-                    </div>
-                    <div class="member-detail">
-                        <h3>肖顺铭</h3>
-                        <p>国企背景，拥有丰富的增长运营和战略规划经验。擅长破解流量密码，曾带动品牌搜索流量300%。</p>
-                    </div>
-                </div>
-                <div class="team-member animate-on-scroll">
-                    <div class="member-image">
-                        <!-- <img src="images/ct.jpg" alt="郑荣华"> -->
+                        <img src="images/zrh.jpg" alt="郑荣华">
                     </div>
                     <div class="member-info">
                         <h3>郑荣华</h3>
-                        <div class="member-position">技术流增长黑客</div>
-                        <p>擅长把握市场规律建立SOP标准流量启动</p>
-                    </div>
-                    <div class="member-detail">
-                        <h3>郑荣华</h3>
-                        <p>构建「工程师思维运营」，运用新技术运营助力合作品牌年沉淀精准客户5000+</p>
+                        <div class="member-position">技术指导&协助运营主管</div>
+                        <p>拥有多年程序员工作经验。他在计算机、互联网和程序开发方面领域有着扎实的专业知识，熟练掌握多种技术框架，为团队提供高效的技术解决方案和专业的指导支持。並协助运营团队运营工作，推动项目的顺利进行，为团队和公司的发展做出了重要贡献。</p>
                     </div>
                 </div>
             </div>
@@ -381,38 +383,8 @@
         </div>
     </section>
 
-    <!-- 联系我们 -->
-    <section id="contact" class="section contact">
-        <div class="container">
-            <h2 class="animate-on-scroll">联系我们</h2>
-            <p class="text-center animate-on-scroll">如果您有任何问题或合作意向，请随时与我们联系，我们将竭诚为您服务。</p>
-            
-            <div class="contact-container">
-                <div class="contact-form animate-on-scroll">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">姓名:</label>
-                            <input type="text" id="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">电话:</label>
-                            <input type="tel" id="phone" required>
-                        </div>
-                        <button type="submit" class="btn">提交</button>
-                    </form>
-                </div>
-                <div class="map-container animate-on-scroll" id="map">
-                    <video autoplay muted loop style="width: 100%; height: auto; max-height: 500px; object-fit: cover;">
-                        <source src="index.mp4" type="video/mp4">
-                        您的浏览器不支持视频标签。
-                    </video>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- 品牌承诺 -->
-    <section class="section promise">
+    <section id="promise" class="section promise">
         <div class="container">
             <h2 class="animate-on-scroll">品牌承诺</h2>
             <p class="text-center animate-on-scroll">我们致力于为客户提供最优质的服务，以下是我们对您的承诺。</p>
@@ -449,6 +421,31 @@
                     </div>
                     <h3>全程支持</h3>
                     <p>从项目启动到执行完成，我们提供全程专业支持和咨询服务。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 - 修改版 -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="animate-on-scroll">联系我们</h2>
+            <p class="text-center animate-on-scroll">如果您有任何问题或合作意向，请随时与我们联系，我们将竭诚为您服务。</p>
+            
+            <div class="contact-container">
+                <!-- 移除地图/视频容器，仅保留表单并居中 -->
+                <div class="contact-form animate-on-scroll" style="margin: 0 auto; max-width: 500px;">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">姓名:</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">电话:</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <button type="submit" class="btn">提交</button>
+                    </form>
                 </div>
             </div>
         </div>
