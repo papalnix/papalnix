@@ -274,35 +274,52 @@ window.addEventListener('load', () => {
 window.addEventListener('scroll', checkScroll);
 
 // 表单提交验证
-document.getElementById('contactForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // 阻止表单提交
-
-    const nameInput = document.getElementById('name');
-    const phoneInput = document.getElementById('phone');
-    const nameErrorMessage = document.getElementById('name-error-message');
-    const phoneErrorMessage = document.getElementById('phone-error-message');
-    const phoneRegex = /^(?:\d{8}|\d{11})$/; // 正则表达式：8位或11位数字
-
-    // 清空错误信息
-    if (nameErrorMessage) nameErrorMessage.textContent = '';
-    if (phoneErrorMessage) phoneErrorMessage.textContent = '';
-
-    // 姓名校验
-    if (nameInput.value.trim() === '') {
-        if (nameErrorMessage) nameErrorMessage.textContent = '姓名不能为空。';
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 这里可以添加表单验证和提交到服务器的代码
+            
+            // 显示美化的成功消息
+            showSuccessMessage();
+            
+            // 重置表单
+            contactForm.reset();
+        });
     }
-
-    // 手机号校验
-    if (!phoneRegex.test(phoneInput.value)) {
-        if (phoneErrorMessage) phoneErrorMessage.textContent = '请输入有效的8位或11位手机号。';
-    }
-
-    // 如果没有错误，显示成功提示并清除输入框
-    if (nameInput.value.trim() !== '' && phoneRegex.test(phoneInput.value)) {
-        alert('提交成功！');
-        nameInput.value = ''; // 清除姓名输入框
-        phoneInput.value = ''; // 清除电话输入框
-        // 这里可以添加表单提交的逻辑
+    
+    // 显示成功消息函数
+    function showSuccessMessage() {
+        // 创建遮罩层
+        const overlay = document.createElement('div');
+        overlay.className = 'form-overlay';
+        document.body.appendChild(overlay);
+        
+        // 创建成功消息框
+        const successMessage = document.createElement('div');
+        successMessage.className = 'form-success-message';
+        successMessage.innerHTML = `
+            <h4>提交成功！</h4>
+            <p>感谢您的信息，我们将尽快与您联系。</p>
+            <button class="close-btn">关闭</button>
+        `;
+        document.body.appendChild(successMessage);
+        
+        // 绑定关闭按钮事件
+        const closeBtn = successMessage.querySelector('.close-btn');
+        closeBtn.addEventListener('click', function() {
+            document.body.removeChild(overlay);
+            document.body.removeChild(successMessage);
+        });
+        
+        // 点击遮罩层也可关闭
+        overlay.addEventListener('click', function() {
+            document.body.removeChild(overlay);
+            document.body.removeChild(successMessage);
+        });
     }
 });
 
@@ -388,17 +405,90 @@ document.addEventListener('DOMContentLoaded', function() {
 // 窗口大小变化时重新调整
 window.addEventListener('resize', optimizeSquareCaseImages);
 
-// 添加视频背景的相关处理
+// 添加视频背景处理代码
 document.addEventListener('DOMContentLoaded', function() {
     const video = document.getElementById('hero-video');
     
-    // 确保视频自动播放
-    video.play().catch(function(error) {
-        console.log('视频自动播放失败，这在某些浏览器中是正常的: ', error);
-        // 可以在这里添加一个播放按钮作为后备方案
-    });
-    
-    // 其他现有的初始化代码保持不变...
+    if (video) {
+        // 确保视频自动播放
+        video.play().catch(function(error) {
+            console.log('视频自动播放失败，这在某些浏览器中是正常的: ', error);
+            
+            // 创建播放按钮作为后备方案
+            if (!document.querySelector('.video-play-btn')) {
+                const playButton = document.createElement('button');
+                playButton.classList.add('video-play-btn');
+                playButton.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>';
+                playButton.style.position = 'absolute';
+                playButton.style.zIndex = '4';
+                playButton.style.top = '50%';
+                playButton.style.left = '50%';
+                playButton.style.transform = 'translate(-50%, -50%)';
+                playButton.style.background = 'rgba(0, 0, 0, 0.5)';
+                playButton.style.color = 'white';
+                playButton.style.border = 'none';
+                playButton.style.borderRadius = '50%';
+                playButton.style.width = '64px';
+                playButton.style.height = '64px';
+                playButton.style.cursor = 'pointer';
+                
+                playButton.addEventListener('click', function() {
+                    video.play();
+                    this.remove();
+                });
+                
+                document.querySelector('.hero').appendChild(playButton);
+            }
+        });
+        
+        // 处理视频加载完成事件
+        video.addEventListener('loadeddata', function() {
+            // 移除可能添加的加载占位符
+            const loadingPlaceholder = document.querySelector('.video-loading');
+            if (loadingPlaceholder) {
+                loadingPlaceholder.remove();
+            }
+            
+            // 确保视频容器可见
+            document.querySelector('.video-background').style.opacity = '1';
+        });
+        
+        // 监听窗口调整大小事件，确保视频始终填满屏幕
+        function resizeVideo() {
+            const heroContainer = document.querySelector('.hero');
+            const windowRatio = window.innerWidth / window.innerHeight;
+            const videoRatio = video.videoWidth / video.videoHeight;
+            
+            if (window.innerWidth <= 768) {
+                // 移动设备使用object-fit: cover
+                video.style.width = '100%';
+                video.style.height = '100%';
+                video.style.objectFit = 'cover';
+                video.style.top = '0';
+                video.style.left = '0';
+                video.style.transform = 'none';
+            } else {
+                // 桌面设备使用传统的居中缩放方法
+                if (windowRatio > videoRatio) {
+                    video.style.width = '100%';
+                    video.style.height = 'auto';
+                } else {
+                    video.style.width = 'auto';
+                    video.style.height = '100%';
+                }
+                
+                video.style.top = '50%';
+                video.style.left = '50%';
+                video.style.transform = 'translate(-50%, -50%)';
+            }
+        }
+        
+        // 初始调整视频大小
+        resizeVideo();
+        
+        // 窗口大小变化时重新调整
+        window.addEventListener('resize', resizeVideo);
+    }
 });
 
 // 添加以下更可靠的代码来确保品牌承诺模块正确显示
