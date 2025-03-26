@@ -185,16 +185,16 @@ function animateNumbers() {
 
 // 修复案例轮播功能
 document.addEventListener('DOMContentLoaded', function() {
-  const slides = document.querySelectorAll('.case-slide');
-  const dots = document.querySelectorAll('.slider-dot');
-  let currentSlide = 0;
+const slides = document.querySelectorAll('.case-slide');
+const dots = document.querySelectorAll('.slider-dot');
+let currentSlide = 0;
   let slideInterval;
-  
+
   // 显示指定幻灯片
-  function showSlide(index) {
+function showSlide(index) {
     // 隐藏所有幻灯片
     slides.forEach(slide => {
-      slide.classList.remove('active');
+        slide.classList.remove('active');
     });
     
     // 更新指示点状态
@@ -206,8 +206,8 @@ document.addEventListener('DOMContentLoaded', function() {
     slides[index].classList.add('active');
     dots[index].classList.add('active');
     currentSlide = index;
-  }
-  
+}
+
   // 初始化：确保只显示第一张幻灯片
   function initSlider() {
     // 先隐藏所有幻灯片
@@ -223,11 +223,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // 切换到下一张幻灯片
-  function nextSlide() {
+function nextSlide() {
     currentSlide = (currentSlide + 1) % slides.length;
     showSlide(currentSlide);
-  }
-  
+}
+
   // 设置自动轮播
   function startAutoSlide() {
     // 清除可能存在的旧定时器
@@ -405,110 +405,379 @@ document.addEventListener('DOMContentLoaded', function() {
 // 窗口大小变化时重新调整
 window.addEventListener('resize', optimizeSquareCaseImages);
 
-// 添加移动端首屏区域调整代码
+// 优化移动端视频组件逻辑
 document.addEventListener('DOMContentLoaded', function() {
     const isMobile = window.innerWidth <= 768;
     
-    // 只在移动端执行以下代码
+    // 只在移动端执行
     if (isMobile) {
         const heroContent = document.querySelector('.hero-content');
+        if (!heroContent) return; // 如果没有找到hero-content元素，提前返回
         
-        if (heroContent) {
-            // 创建移动端视频播放器容器
-            const videoPlayerContainer = document.createElement('div');
-            videoPlayerContainer.className = 'mobile-video-player';
+        // 检查是否已经存在视频播放组件
+        if (document.querySelector('.mobile-video-player')) return; // 如果已存在，避免重复创建
+        
+        // 创建视频播放器
+        const videoPlayer = createVideoPlayer();
+        heroContent.appendChild(videoPlayer.container);
+        
+        // 设置事件监听和控制逻辑
+        setupVideoEvents(videoPlayer);
+    }
+    
+    // 创建视频播放器函数
+    function createVideoPlayer() {
+        // 创建容器
+        const container = document.createElement('div');
+        container.className = 'mobile-video-player';
+        Object.assign(container.style, {
+            borderRadius: '12px',
+            overflow: 'hidden',
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.15)',
+            position: 'relative',
+            marginTop: '25px',
+            marginBottom: '25px',
+            width: '100%',
+            maxWidth: '320px'
+        });
+        
+        // 创建视频元素
+        const video = document.createElement('video');
+        Object.assign(video, {
+            playsInline: true,
+            muted: true,
+            autoplay: true,
+            loop: false,
+            controls: false,
+            id: 'mobile-hero-video'
+        });
+        Object.assign(video.style, {
+            display: 'block',
+            width: '100%',
+            borderRadius: '12px'
+        });
+        
+        // 添加视频源
+        const source = document.createElement('source');
+        source.src = 'bg.mp4';
+        source.type = 'video/mp4';
+        video.appendChild(source);
+        
+        // 创建控制界面
+        const controls = createCustomControls();
+        
+        // 组装播放器
+        container.appendChild(video);
+        container.appendChild(controls.container);
+        
+        return {
+            container,
+            video,
+            controls
+        };
+    }
+    
+    // 创建自定义控制界面函数
+    function createCustomControls() {
+        // 创建控制容器
+        const container = document.createElement('div');
+        container.className = 'video-custom-controls';
+        Object.assign(container.style, {
+            position: 'absolute',
+            bottom: '0',
+            left: '0',
+            width: '100%',
+            padding: '10px',
+            background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            opacity: '0',
+            transition: 'opacity 0.3s ease'
+        });
+        
+        // 创建左侧控制按钮组
+        const leftControls = document.createElement('div');
+        leftControls.style.display = 'flex';
+        leftControls.style.alignItems = 'center';
+        
+        // 播放/暂停按钮
+        const playPauseBtn = createButton('video-play-pause-btn', 
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" fill="white"></path></svg>',
+            { marginRight: '10px' });
+        
+        // 音量按钮
+        const volumeBtn = createButton('video-volume-btn',
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" fill="white"></path></svg>');
+        
+        // 进度条容器
+        const progressContainer = document.createElement('div');
+        progressContainer.className = 'video-progress-container';
+        Object.assign(progressContainer.style, {
+            flex: '1',
+            height: '5px',
+            background: 'rgba(255, 255, 255, 0.3)',
+            borderRadius: '5px',
+            margin: '0 10px',
+            position: 'relative',
+            cursor: 'pointer'
+        });
+        
+        // 进度条
+        const progressBar = document.createElement('div');
+        progressBar.className = 'video-progress-bar';
+        Object.assign(progressBar.style, {
+            height: '100%',
+            width: '0%',
+            background: '#0A3D62',
+            borderRadius: '5px',
+            transition: 'width 0.1s ease'
+        });
+        progressContainer.appendChild(progressBar);
+        
+        // 创建右侧控制按钮组
+        const rightControls = document.createElement('div');
+        rightControls.style.display = 'flex';
+        rightControls.style.alignItems = 'center';
+        
+        // 时间显示
+        const timeDisplay = document.createElement('div');
+        timeDisplay.className = 'video-time-display';
+        timeDisplay.textContent = '0:00 / 0:00';
+        Object.assign(timeDisplay.style, {
+            color: 'white',
+            fontSize: '12px',
+            marginRight: '10px'
+        });
+        
+        // 全屏按钮
+        const fullscreenBtn = createButton('video-fullscreen-btn',
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" fill="white"></path></svg>');
+        
+        // 组装控制界面
+        leftControls.appendChild(playPauseBtn);
+        leftControls.appendChild(volumeBtn);
+        
+        rightControls.appendChild(timeDisplay);
+        rightControls.appendChild(fullscreenBtn);
+        
+        container.appendChild(leftControls);
+        container.appendChild(progressContainer);
+        container.appendChild(rightControls);
+        
+        return {
+            container,
+            playPauseBtn,
+            volumeBtn,
+            progressContainer,
+            progressBar,
+            timeDisplay,
+            fullscreenBtn
+        };
+    }
+    
+    // 创建按钮辅助函数
+    function createButton(className, innerHTML, extraStyles = {}) {
+        const button = document.createElement('button');
+        button.className = className;
+        button.innerHTML = innerHTML;
+        
+        const baseStyles = {
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+            width: '30px',
+            height: '30px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+        };
+        
+        Object.assign(button.style, baseStyles, extraStyles);
+        
+        return button;
+    }
+    
+    // 设置视频事件监听函数
+    function setupVideoEvents(player) {
+        const { video, controls, container } = player;
+        const { playPauseBtn, volumeBtn, progressContainer, progressBar, timeDisplay, fullscreenBtn } = controls;
+        
+        // 状态变量
+        let videoLoadFailed = false;
+        let userPaused = false;
+        let videoMuted = true;
+        
+        // 辅助函数：格式化时间
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            seconds = Math.floor(seconds % 60);
+            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+        
+        // 辅助函数：更新时间显示
+        function updateTimeDisplay() {
+            if (!isNaN(video.duration)) {
+                const currentTime = formatTime(video.currentTime);
+                const duration = formatTime(video.duration);
+                timeDisplay.textContent = `${currentTime} / ${duration}`;
+            }
+        }
+        
+        // 错误处理
+        video.addEventListener('error', function() {
+            videoLoadFailed = true;
+            container.style.display = 'none';
             
-            // 创建视频元素
-            const videoElement = document.createElement('video');
-            videoElement.controls = false; // 初始不显示控制栏
-            videoElement.playsInline = true;
-            videoElement.muted = true; // 默认静音以允许自动播放
-            videoElement.id = 'mobile-hero-video';
-            videoElement.style.display = 'block';
+            // 创建透明占位符保持布局
+            try {
+                const placeholderHeight = getComputedStyle(container).height;
+                if (placeholderHeight && placeholderHeight !== '0px') {
+                    const placeholder = document.createElement('div');
+                    placeholder.style.height = placeholderHeight;
+                    placeholder.style.marginBottom = '25px';
+                    placeholder.style.opacity = '0';
+                    container.parentNode.appendChild(placeholder);
+                }
+            } catch (e) {
+                console.log('无法创建占位符');
+            }
+        });
+        
+        // 超时处理
+        const videoTimeout = setTimeout(function() {
+            if (video.readyState === 0) {
+                videoLoadFailed = true;
+                container.style.display = 'none';
+            }
+        }, 3000);
+        
+        // 元数据加载完成
+        video.addEventListener('loadedmetadata', function() {
+            video.style.transform = 'translateZ(0)'; // 启用硬件加速
+            updateTimeDisplay();
             
-            // 添加视频源
-            const videoSource = document.createElement('source');
-            videoSource.src = 'bg.mp4'; // 视频源
-            videoSource.type = 'video/mp4';
-            
-            // 播放失败时显示的文本
-            videoElement.textContent = '您的浏览器不支持视频播放';
-            
-            // 将源添加到视频元素
-            videoElement.appendChild(videoSource);
-            
-            // 创建播放按钮
-            const playButton = document.createElement('button');
-            playButton.className = 'video-play-btn';
-            playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>';
-            
-            // 添加视频元素和播放按钮到容器
-            videoPlayerContainer.appendChild(videoElement);
-            videoPlayerContainer.appendChild(playButton);
-            
-            // 添加到hero-content之后
-            heroContent.appendChild(videoPlayerContainer);
-            
-            // 处理视频加载错误
-            videoElement.addEventListener('error', function() {
-                console.log('视频加载失败');
-                videoPlayerContainer.style.display = 'none'; // 隐藏整个视频播放器容器
-            });
-            
-            // 播放按钮点击事件
-            playButton.addEventListener('click', function() {
-                // 尝试播放视频
-                const playPromise = videoElement.play();
-                
+            if (!userPaused) {
+                const playPromise = video.play();
                 if (playPromise !== undefined) {
                     playPromise.then(function() {
-                        // 播放成功
-                        videoElement.controls = true; // 显示控制栏
-                        videoElement.muted = false; // 取消静音
-                        playButton.style.display = 'none'; // 隐藏播放按钮
-                    }).catch(function(error) {
-                        // 播放失败
-                        console.log('视频播放失败:', error);
-                        // 如果是因为用户交互限制，提示用户
-                        alert('请点击视频进行播放');
+                        // 播放成功，1秒后显示控制界面，再1秒后隐藏
+                        setTimeout(function() {
+                            controls.container.style.opacity = '1';
+                            setTimeout(function() {
+                                if (!video.paused) {
+                                    controls.container.style.opacity = '0';
+                                }
+                            }, 1000);
+                        }, 1000);
+                    }).catch(function() {
+                        // 自动播放失败，显示播放按钮
+                        controls.container.style.opacity = '1';
+                        playPauseBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M8 5v14l11-7z" fill="white"></path></svg>';
                     });
                 }
-            });
+            }
+        });
+        
+        // 视频加载完成
+        video.addEventListener('loadeddata', function() {
+            clearTimeout(videoTimeout);
+            if (!videoLoadFailed && !userPaused) {
+                video.play();
+            }
+        });
+        
+        // 时间更新
+        video.addEventListener('timeupdate', function() {
+            const progress = (video.currentTime / video.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+            updateTimeDisplay();
+        });
+        
+        // 播放状态改变
+        video.addEventListener('playing', function() {
+            playPauseBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" fill="white"></path></svg>';
+        });
+        
+        // 播放结束
+        video.addEventListener('ended', function() {
+            playPauseBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M8 5v14l11-7z" fill="white"></path></svg>';
+            controls.container.style.opacity = '1';
+        });
+        
+        // 播放/暂停按钮点击
+        playPauseBtn.addEventListener('click', function() {
+            if (video.paused) {
+                video.play();
+                userPaused = false;
+                playPauseBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" fill="white"></path></svg>';
+            } else {
+                video.pause();
+                userPaused = true;
+                playPauseBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M8 5v14l11-7z" fill="white"></path></svg>';
+            }
+        });
+        
+        // 音量按钮点击
+        volumeBtn.addEventListener('click', function() {
+            videoMuted = !videoMuted;
+            video.muted = videoMuted;
             
-            // 尝试自动播放（通常移动设备会阻止，但我们仍然尝试）
-            videoElement.addEventListener('loadeddata', function() {
-                const autoplayPromise = videoElement.play();
-                
-                if (autoplayPromise !== undefined) {
-                    autoplayPromise.catch(function() {
-                        // 自动播放失败，保持播放按钮可见
-                        console.log('自动播放被阻止，等待用户交互');
-                    });
+            volumeBtn.innerHTML = videoMuted ? 
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" fill="white"></path></svg>' :
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" fill="white"></path></svg>';
+        });
+        
+        // 全屏按钮点击
+        fullscreenBtn.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(() => {});
+            } else {
+                document.exitFullscreen();
+            }
+        });
+        
+        // 全屏状态变化
+        document.addEventListener('fullscreenchange', function() {
+            fullscreenBtn.innerHTML = document.fullscreenElement ?
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" fill="white"></path></svg>' :
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" fill="white"></path></svg>';
+        });
+        
+        // 进度条点击
+        progressContainer.addEventListener('click', function(e) {
+            const rect = progressContainer.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            video.currentTime = pos * video.duration;
+        });
+        
+        // 视频点击
+        video.addEventListener('click', function() {
+            const controlsOpacity = controls.container.style.opacity;
+            if (controlsOpacity === '0' || controlsOpacity === '') {
+                controls.container.style.opacity = '1';
+                // 如果正在播放，3秒后自动隐藏
+                if (!video.paused) {
+                    setTimeout(function() {
+                        controls.container.style.opacity = '0';
+                    }, 3000);
                 }
-            });
-            
-            // 监听DOM变化，如果视频元素被移除，确保不影响布局
-            const observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.type === 'childList' && !heroContent.contains(videoPlayerContainer)) {
-                        // 如果视频容器被移除，确保布局正常
-                        console.log('视频容器被移除，调整布局');
-                        // 可以在这里添加额外的布局调整代码
-                    }
-                });
-            });
-            
-            // 开始观察DOM变化
-            observer.observe(heroContent, { childList: true });
-            
-            // 设置加载超时（5秒）
-            setTimeout(function() {
-                if (videoElement.readyState === 0) { // 未加载
-                    console.log('视频加载超时');
-                    videoPlayerContainer.style.display = 'none'; // 隐藏视频容器
-                }
-            }, 5000);
-        }
+            } else {
+                controls.container.style.opacity = '0';
+            }
+        });
+        
+        // 鼠标悬停
+        container.addEventListener('mouseenter', function() {
+            controls.container.style.opacity = '1';
+        });
+        
+        // 鼠标离开
+        container.addEventListener('mouseleave', function() {
+            if (!video.paused) {
+                controls.container.style.opacity = '0';
+            }
+        });
     }
 });
 
