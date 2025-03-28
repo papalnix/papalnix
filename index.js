@@ -406,8 +406,8 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('resize', optimizeSquareCaseImages);
 
 // 手机端访问时在首屏区域加载视频
-
 document.addEventListener('DOMContentLoaded', mobilePhoneLoadVideo);
+
 // 优化移动端视频组件逻辑
 function mobilePhoneLoadVideo() {
     const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -431,7 +431,7 @@ function mobilePhoneLoadVideo() {
             // 检查是否已经存在视频播放组件
             if (document.querySelector('.mobile-video-player')) return;
             
-            // 创建一个不可见的视频容器，先不添加到DOM，避免出现布局闪烁
+            // 创建一个可见的视频容器，先不添加到DOM，避免出现布局闪烁
             const videoContainer = document.createElement('div');
             videoContainer.className = 'mobile-video-player';
             Object.assign(videoContainer.style, {
@@ -443,7 +443,7 @@ function mobilePhoneLoadVideo() {
                 marginBottom: originalLayout.marginBottom,
                 width: originalLayout.width,
                 maxWidth: originalLayout.maxWidth,
-                opacity: '0', // 初始不可见，加载成功后才显示
+                opacity: '1', // 修改为可见
                 transition: 'opacity 0.3s ease'
             });
             
@@ -456,9 +456,10 @@ function mobilePhoneLoadVideo() {
             videoElement.setAttribute('x5-playsinline', ''); // 兼容微信浏览器
             videoElement.setAttribute('x5-video-player-type', 'h5'); // 强制H5播放器，微信浏览器
             videoElement.setAttribute('x5-video-player-fullscreen', 'true'); // 全屏设置，微信浏览器
-            videoElement.setAttribute('preload', 'metadata'); // 只预加载元数据，减少流量
-            // videoElement.setAttribute('poster', 'bg.jpeg'); // 设置封面，加载前显示
+            videoElement.setAttribute('preload', 'auto'); // 修改为auto，尝试预加载
+            videoElement.setAttribute('poster', 'bg.jpeg'); // 设置封面，加载前显示
             videoElement.setAttribute('controls', ''); // 显示原生控件
+            videoElement.setAttribute('autoplay', ''); // 添加自动播放属性
             
             // 不自动设置autoplay，我们将在加载后手动尝试播放
             videoElement.muted = true; // 默认静音，增加自动播放成功率
@@ -475,41 +476,19 @@ function mobilePhoneLoadVideo() {
             
             // 添加视频源
             const videoSource = document.createElement('source');
-            videoSource.src = './bg.mp4';
+            videoSource.src = 'bg.mp4'; // 移除点号，直接使用根目录的文件
             videoSource.type = 'video/mp4';
             videoElement.appendChild(videoSource);
             
-            // 添加到容器，但暂不显示
+            // 添加到容器并立即显示
             videoContainer.appendChild(videoElement);
-            
-            // 设置超时检测，如果视频在指定时间内没有加载，则使用备用方案
-            const loadTimeout = setTimeout(() => {
-                if (!videoElement.readyState || videoElement.readyState < 2) {
-                    useFallbackSolution(videoContainer, originalLayout);
-                }
-            }, 3000);
             
             // 监听视频加载成功事件
             videoElement.addEventListener('loadeddata', function() {
-                clearTimeout(loadTimeout);
-                
-                // 视频加载成功，显示容器
-                videoContainer.style.opacity = '1';
-                
                 // 尝试自动播放
-                const playPromise = videoElement.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(() => {
-                        // 自动播放失败，但已经显示了原生控件，用户可以手动点击播放
-                        console.log('需要用户交互才能播放视频');
-                    });
-                }
-            });
-            
-            // 监听错误事件
-            videoElement.addEventListener('error', function() {
-                clearTimeout(loadTimeout);
-                useFallbackSolution(videoContainer, originalLayout);
+                videoElement.play().catch(() => {
+                    console.log('需要用户交互才能播放视频');
+                });
             });
             
             // 将容器添加到页面
@@ -537,7 +516,7 @@ function mobilePhoneLoadVideo() {
                     width: layout.width,
                     maxWidth: layout.maxWidth,
                     height: layout.height,
-                    // backgroundImage: 'url("bg.jpeg")',
+                    backgroundImage: 'url("bg.jpeg")',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 });
@@ -553,7 +532,7 @@ function mobilePhoneLoadVideo() {
                 // 更新容器样式为静态背景
                 Object.assign(container.style, {
                     opacity: '1',
-                    // backgroundImage: 'url("bg.jpeg")',
+                    backgroundImage: 'url("bg.jpeg")',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     height: layout.height
