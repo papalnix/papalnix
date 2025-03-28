@@ -454,7 +454,7 @@ document.addEventListener('DOMContentLoaded', function() {
             videoElement.setAttribute('x5-video-player-type', 'h5'); // 强制H5播放器，微信浏览器
             videoElement.setAttribute('x5-video-player-fullscreen', 'true'); // 全屏设置，微信浏览器
             videoElement.setAttribute('preload', 'metadata'); // 只预加载元数据，减少流量
-            videoElement.setAttribute('poster', './images/bg.jpeg'); // 设置封面，加载前显示
+            videoElement.setAttribute('poster', 'images/bg.jpeg'); // 设置封面，加载前显示
             videoElement.setAttribute('controls', ''); // 显示原生控件
             
             // 不自动设置autoplay，我们将在加载后手动尝试播放
@@ -534,7 +534,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     width: layout.width,
                     maxWidth: layout.maxWidth,
                     height: layout.height,
-                    backgroundImage: 'url("./images/bg.jpeg")',
+                    backgroundImage: 'url("images/bg.jpeg")',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 });
@@ -550,7 +550,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 更新容器样式为静态背景
                 Object.assign(container.style, {
                     opacity: '1',
-                    backgroundImage: 'url("./images/bg.jpeg")',
+                    backgroundImage: 'url("images/bg.jpeg")',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     height: layout.height
