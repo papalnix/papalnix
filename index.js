@@ -405,8 +405,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // 窗口大小变化时重新调整
 window.addEventListener('resize', optimizeSquareCaseImages);
 
+// 手机端访问时在首屏区域加载视频
+
+document.addEventListener('DOMContentLoaded', mobilePhoneLoadVideo);
 // 优化移动端视频组件逻辑
-document.addEventListener('DOMContentLoaded', function() {
+function mobilePhoneLoadVideo() {
     const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
     // 1. 只在移动端执行
@@ -454,7 +457,7 @@ document.addEventListener('DOMContentLoaded', function() {
             videoElement.setAttribute('x5-video-player-type', 'h5'); // 强制H5播放器，微信浏览器
             videoElement.setAttribute('x5-video-player-fullscreen', 'true'); // 全屏设置，微信浏览器
             videoElement.setAttribute('preload', 'metadata'); // 只预加载元数据，减少流量
-            videoElement.setAttribute('poster', 'bg.jpeg'); // 设置封面，加载前显示
+            // videoElement.setAttribute('poster', 'bg.jpeg'); // 设置封面，加载前显示
             videoElement.setAttribute('controls', ''); // 显示原生控件
             
             // 不自动设置autoplay，我们将在加载后手动尝试播放
@@ -534,7 +537,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     width: layout.width,
                     maxWidth: layout.maxWidth,
                     height: layout.height,
-                    backgroundImage: 'url("bg.jpeg")',
+                    // backgroundImage: 'url("bg.jpeg")',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 });
@@ -550,7 +553,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 更新容器样式为静态背景
                 Object.assign(container.style, {
                     opacity: '1',
-                    backgroundImage: 'url("bg.jpeg")',
+                    // backgroundImage: 'url("bg.jpeg")',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     height: layout.height
@@ -561,7 +564,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('备用方案也失败了，但用户无感知', e);
         }
     }
-});
+}
 
 // 添加以下更可靠的代码来确保品牌承诺模块正确显示
 document.addEventListener('DOMContentLoaded', function() {
