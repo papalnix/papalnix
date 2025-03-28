@@ -1540,7 +1540,8 @@ footer {
     
     /* 首屏区域基础样式调整 */
     .hero {
-        background-image: url('bg.jpeg'); /* 使用静态背景图片 */
+        /* 使用静态背景图片 */
+        /* background-image: url('./images/bg.jpeg');  */
         background-size: cover;
         background-position: center;
         position: relative;
