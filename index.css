@@ -66,6 +66,16 @@ a {
     transition: var(--transition-smooth);
 }
 
+.news-item a {
+    text-decoration: none;
+    color: #1a1a1a;
+    transition: color 0.2s;
+}
+.news-item a:hover {
+    color: #007bff;
+    text-decoration: none;
+}
+
 img {
     max-width: 100%;
     height: auto;
@@ -1610,7 +1620,10 @@ footer {
     
     /* 确保其他首屏元素正确显示 */
     .hero h1 {
-        color: #000;
+        .news-list a:hover {
+    text-decoration: underline;
+}
+    color: #000;
         text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
     }
     
